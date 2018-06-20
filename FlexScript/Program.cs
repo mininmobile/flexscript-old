@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,9 +12,17 @@ namespace FlexScript {
                 Console.WriteLine("Launched FlexScript Console");
             } else {
                 if (args[0] == "-f" || args[0] == "--file") {
-                    Console.WriteLine("Launched FlexScript Interpreter to File");
+                    if (args.Length > 1) {
+                        if (File.Exists(args[1])) {
+                            Console.WriteLine(File.ReadAllText(args[1]));
+                        } else {
+                            throw new Exception("Invalid Arguments; invalid file specified");
+                        }
+                    } else {
+                        throw new Exception("Invalid Arguments; asked to run file without specifying file");
+                    }
                 } else {
-                    Console.WriteLine("fatal: invalid arguments");
+                    throw new Exception("Invalid Arguments");
                 }
             }
 

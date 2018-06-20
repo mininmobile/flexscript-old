@@ -63,7 +63,7 @@ namespace FlexScript {
                 case "color":
                     if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
 
-                    Console.BackgroundColor = getColors()[command[1]];
+                    Console.ForegroundColor = getColors()[command[1]];
                     break;
 
                 default:

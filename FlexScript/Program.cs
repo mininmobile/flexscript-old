@@ -48,8 +48,22 @@ namespace FlexScript {
 
             switch (command[0]) {
                 case "print":
+                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+
                     string printable = string.Join(" ", command.Skip(1));
                     output += printable + "\n";
+                    break;
+
+                case "background":
+                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+
+                    Console.BackgroundColor = getColors()[command[1]];
+                    break;
+
+                case "color":
+                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+
+                    Console.BackgroundColor = getColors()[command[1]];
                     break;
 
                 default:
@@ -58,5 +72,15 @@ namespace FlexScript {
 
             return output;
         }
+
+        #region Helper Functions
+        static private Dictionary<string, ConsoleColor> getColors() {
+            return new Dictionary<string, ConsoleColor>() {
+                {"red", ConsoleColor.Red},
+                {"green", ConsoleColor.Green},
+                {"blue", ConsoleColor.Blue}
+            };
+        }
+        #endregion
     }
 }

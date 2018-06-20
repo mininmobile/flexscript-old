@@ -34,7 +34,19 @@ namespace FlexScript {
 
             string output = "";
 
-            output = string.Join(", ", lines);
+            foreach (string line in lines) {
+                string[] command = line.Split(' ');
+
+                switch (command[0]) {
+                    case "print":
+                        string printable = string.Join(" ", command.Skip(1));
+                        output += printable + "\n";
+                        break;
+
+                    default:
+                        throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
+                }
+            }
 
             return output;
         }

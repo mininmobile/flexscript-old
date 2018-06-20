@@ -77,8 +77,21 @@ namespace FlexScript {
         static private Dictionary<string, ConsoleColor> getColors() {
             return new Dictionary<string, ConsoleColor>() {
                 {"red", ConsoleColor.Red},
+                {"darkred", ConsoleColor.DarkRed},
                 {"green", ConsoleColor.Green},
-                {"blue", ConsoleColor.Blue}
+                {"darkgreen", ConsoleColor.DarkGreen},
+                {"blue", ConsoleColor.Blue},
+                {"cyan", ConsoleColor.Cyan},
+                {"darkcyan", ConsoleColor.DarkCyan},
+                {"darkblue", ConsoleColor.DarkBlue},
+                {"magenta", ConsoleColor.Magenta},
+                {"darkmagenta", ConsoleColor.DarkMagenta},
+                {"yellow", ConsoleColor.Yellow},
+                {"darkyellow", ConsoleColor.DarkYellow},
+                {"white", ConsoleColor.White},
+                {"gray", ConsoleColor.Gray},
+                {"darkgray", ConsoleColor.DarkGray},
+                {"black", ConsoleColor.Black}
             };
         }
         #endregion

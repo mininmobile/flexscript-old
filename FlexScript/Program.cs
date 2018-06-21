@@ -39,7 +39,7 @@ namespace FlexScript {
                 ParseLine(line, variables);
             }
 
-            Console.WriteLine(variables["foo"]);
+            Console.WriteLine(variables["input"]);
         }
 
         static private void ParseLine(string line, Dictionary<string, string> vars) {
@@ -59,6 +59,11 @@ namespace FlexScript {
                     switch (command[2]) {
                         case "=":
                             variables.Add(command[1], string.Join(" ", command.Skip(3)));
+                            break;
+
+                        case "<=":
+                            Console.Write(string.Join(" ", command.Skip(3)));
+                            variables.Add(command[1], Console.ReadLine());
                             break;
 
                         default:

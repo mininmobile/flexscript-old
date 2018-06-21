@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 namespace FlexScript {
     class Program {
         static void Main(string[] args) {
+            // Create variables container
             Dictionary<string, string> variables = new Dictionary<string, string>();
 
+            // Parse command-line arguments
             if (args.Length == 0) {
                 Console.WriteLine("Launched FlexScript Console");
             } else if (args[0] == "-f" || args[0] == "--file") {
@@ -31,10 +33,14 @@ namespace FlexScript {
             Console.ReadKey();
         }
 
+        #region Parser Functions
         static private void ParseFile(string filePath, Dictionary<string, string> vars) {
-            IEnumerable<string> lines = File.ReadLines(filePath);
             Dictionary<string, string> variables = vars;
 
+            // Read all input lines from file
+            IEnumerable<string> lines = File.ReadLines(filePath);
+
+            // Parse each input line in file
             foreach (string line in lines) {
                 ParseLine(line, variables);
             }
@@ -42,17 +48,26 @@ namespace FlexScript {
 
         static private void ParseLine(string line, Dictionary<string, string> vars) {
             Dictionary<string, string> variables = vars;
+
+            // Removes comments from input line
+            if (line.IndexOf("//") != -1)
+                line = line.Substring(0, line.IndexOf("//"));
+
+            // Formats input into tokens
             List<string> command = line.Split(' ').ToList();
             int commandLength = command.ToArray().Length;
 
+            // Formats variables into variable contents
             for (int i = 0; i < commandLength; i++) {
                 string token = command[i];
+
                 int close = token.IndexOf("}");
-                if (token.Contains("{") && close != -1) {
+                if (token.StartsWith("{") && close != -1) {
                     command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
                 }
             }
 
+            // Command parser
             switch (command[0]) {
                 case "print":
                     if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
@@ -125,9 +140,11 @@ namespace FlexScript {
                     throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
             }
         }
+        #endregion
 
         #region Helper Functions
         static private Dictionary<string, ConsoleColor> getColors() {
+            // Return dictionary of the 16 supported terminal colors
             return new Dictionary<string, ConsoleColor>() {
                 {"red", ConsoleColor.Red},
                 {"darkred", ConsoleColor.DarkRed},

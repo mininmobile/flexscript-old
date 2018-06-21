@@ -13,7 +13,7 @@ namespace FlexScript {
             } else if (args[0] == "-f" || args[0] == "--file") {
                 if (args.Length > 1) {
                     if (File.Exists(args[1])) {
-                        Console.WriteLine(ParseFile(args[0]));
+                        ParseFile(args[0]);
                     } else {
                         throw new Exception("Invalid Arguments; invalid file specified");
                     }
@@ -21,7 +21,7 @@ namespace FlexScript {
                     throw new Exception("Invalid Arguments; asked to run file without specifying file");
                 }
             } else if (File.Exists(args[0])) {
-                Console.WriteLine(ParseFile(args[0]));
+                ParseFile(args[0]);
             } else {
                 throw new Exception("Invalid Arguments");
             }
@@ -29,29 +29,23 @@ namespace FlexScript {
             Console.ReadKey();
         }
 
-        static private string ParseFile(string filePath) {
+        static private void ParseFile(string filePath) {
             IEnumerable<string> lines = File.ReadLines(filePath);
 
-            string output = "";
-
             foreach (string line in lines) {
-                output += ParseLine(line);
+                ParseLine(line);
             }
-
-            return output;
         }
 
-        static private string ParseLine(string line) {
+        static private void ParseLine(string line) {
             string[] command = line.Split(' ');
-
-            string output = "";
 
             switch (command[0]) {
                 case "print":
                     if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
 
                     string printable = string.Join(" ", command.Skip(1));
-                    output += printable + "\n";
+                    Console.WriteLine(printable);
                     break;
 
                 case "clear":
@@ -73,8 +67,6 @@ namespace FlexScript {
                 default:
                     throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
             }
-
-            return output;
         }
 
         #region Helper Functions

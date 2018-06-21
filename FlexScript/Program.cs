@@ -38,23 +38,30 @@ namespace FlexScript {
             foreach (string line in lines) {
                 ParseLine(line, variables);
             }
-
-            Console.WriteLine(variables["input"]);
         }
 
         static private void ParseLine(string line, Dictionary<string, string> vars) {
             Dictionary<string, string> variables = vars;
-            string[] command = line.Split(' ');
+            List<string> command = line.Split(' ').ToList();
+            int commandLenth = command.ToArray().Length;
+
+            for (int i = 0; i < commandLenth; i++) {
+                string token = command[i];
+                int close = token.IndexOf("}");
+                if (token.Contains("{") && close != -1) {
+                    command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+                }
+            }
 
             switch (command[0]) {
                 case "print":
-                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
                     
                     Console.WriteLine(string.Join(" ", command.Skip(1)));
                     break;
 
                 case "var":
-                    if (command.Length < 3) throw new Exception("Invalid Token; command expected arguments");
+                    if (commandLenth < 3) throw new Exception("Invalid Token; command expected arguments");
 
                     switch (command[2]) {
                         case "=":
@@ -76,13 +83,13 @@ namespace FlexScript {
                     break;
 
                 case "background":
-                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
 
                     Console.BackgroundColor = getColors()[command[1]];
                     break;
 
                 case "color":
-                    if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
 
                     Console.ForegroundColor = getColors()[command[1]];
                     break;

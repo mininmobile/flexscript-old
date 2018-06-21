@@ -65,16 +65,25 @@ namespace FlexScript {
 
                     switch (command[2]) {
                         case "=":
-                            variables.Add(command[1], string.Join(" ", command.Skip(3)));
+                            if (variables.Keys.Contains(command[1]))
+                                variables[command[1]] = string.Join(" ", command.Skip(3));
+                            else
+                                variables.Add(command[1], string.Join(" ", command.Skip(3)));
                             break;
 
                         case "<=":
                             Console.Write(string.Join(" ", command.Skip(3)));
-                            variables.Add(command[1], Console.ReadLine());
+                            if (variables.Keys.Contains(command[1]))
+                                variables[command[1]] = Console.ReadLine();
+                            else
+                                variables.Add(command[1], Console.ReadLine());
                             break;
 
                         case "<":
-                            variables.Add(command[1], Console.ReadLine());
+                            if (variables.Keys.Contains(command[1]))
+                                variables[command[1]] = Console.ReadLine();
+                            else
+                                variables.Add(command[1], Console.ReadLine());
                             break;
 
                         default:

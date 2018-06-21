@@ -43,9 +43,9 @@ namespace FlexScript {
         static private void ParseLine(string line, Dictionary<string, string> vars) {
             Dictionary<string, string> variables = vars;
             List<string> command = line.Split(' ').ToList();
-            int commandLenth = command.ToArray().Length;
+            int commandLength = command.ToArray().Length;
 
-            for (int i = 0; i < commandLenth; i++) {
+            for (int i = 0; i < commandLength; i++) {
                 string token = command[i];
                 int close = token.IndexOf("}");
                 if (token.Contains("{") && close != -1) {
@@ -55,13 +55,31 @@ namespace FlexScript {
 
             switch (command[0]) {
                 case "print":
-                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
-                    
+                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
+
                     Console.WriteLine(string.Join(" ", command.Skip(1)));
                     break;
 
+                case "pause":
+                    if (commandLength == 1) {
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey(true);
+                    } else if (commandLength == 2 && command[1] == "-s" || command[1] == "--silent") {
+                        Console.ReadKey(true);
+                    } else if (commandLength > 2 && command[1] == "-c" || command[1] == "--custom") {
+                        Console.WriteLine(string.Join(" ", command.Skip(2)));
+                        Console.ReadKey(true);
+                    } else {
+                        throw new Exception("error undefined");
+                    }
+                    break;
+
+                case "clear":
+                    Console.Clear();
+                    break;
+
                 case "var":
-                    if (commandLenth < 3) throw new Exception("Invalid Token; command expected arguments");
+                    if (commandLength < 3) throw new Exception("Invalid Token; command expected arguments");
 
                     switch (command[2]) {
                         case "=":
@@ -91,18 +109,14 @@ namespace FlexScript {
                     }
                     break;
 
-                case "clear":
-                    Console.Clear();
-                    break;
-
                 case "background":
-                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
+                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
                     Console.BackgroundColor = getColors()[command[1]];
                     break;
 
                 case "color":
-                    if (commandLenth == 1) throw new Exception("Invalid Token; command expected argument");
+                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
                     Console.ForegroundColor = getColors()[command[1]];
                     break;

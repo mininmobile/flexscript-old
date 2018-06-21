@@ -73,6 +73,10 @@ namespace FlexScript {
                             variables.Add(command[1], Console.ReadLine());
                             break;
 
+                        case "<":
+                            variables.Add(command[1], Console.ReadLine());
+                            break;
+
                         default:
                             throw new Exception("Invalid Token; unsupported variable assignment token");
                     }

@@ -54,6 +54,10 @@ namespace FlexScript {
                     output += printable + "\n";
                     break;
 
+                case "clear":
+                    Console.Clear();
+                    break;
+
                 case "background":
                     if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
 

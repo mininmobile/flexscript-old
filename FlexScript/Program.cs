@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 namespace FlexScript {
     class Program {
         static void Main(string[] args) {
+            Dictionary<string, string> variables = new Dictionary<string, string>();
+
             if (args.Length == 0) {
                 Console.WriteLine("Launched FlexScript Console");
             } else if (args[0] == "-f" || args[0] == "--file") {
                 if (args.Length > 1) {
                     if (File.Exists(args[1])) {
-                        ParseFile(args[0]);
+                        ParseFile(args[0], variables);
                     } else {
                         throw new Exception("Invalid Arguments; invalid file specified");
                     }
@@ -21,7 +23,7 @@ namespace FlexScript {
                     throw new Exception("Invalid Arguments; asked to run file without specifying file");
                 }
             } else if (File.Exists(args[0])) {
-                ParseFile(args[0]);
+                ParseFile(args[0], variables);
             } else {
                 throw new Exception("Invalid Arguments");
             }
@@ -29,23 +31,39 @@ namespace FlexScript {
             Console.ReadKey();
         }
 
-        static private void ParseFile(string filePath) {
+        static private void ParseFile(string filePath, Dictionary<string, string> vars) {
             IEnumerable<string> lines = File.ReadLines(filePath);
+            Dictionary<string, string> variables = vars;
 
             foreach (string line in lines) {
-                ParseLine(line);
+                ParseLine(line, variables);
             }
+
+            Console.WriteLine(variables["foo"]);
         }
 
-        static private void ParseLine(string line) {
+        static private void ParseLine(string line, Dictionary<string, string> vars) {
+            Dictionary<string, string> variables = vars;
             string[] command = line.Split(' ');
 
             switch (command[0]) {
                 case "print":
                     if (command.Length == 1) throw new Exception("Invalid Token; command expected argument");
+                    
+                    Console.WriteLine(string.Join(" ", command.Skip(1)));
+                    break;
 
-                    string printable = string.Join(" ", command.Skip(1));
-                    Console.WriteLine(printable);
+                case "var":
+                    if (command.Length < 3) throw new Exception("Invalid Token; command expected arguments");
+
+                    switch (command[2]) {
+                        case "=":
+                            variables.Add(command[1], string.Join(" ", command.Skip(3)));
+                            break;
+
+                        default:
+                            throw new Exception("Invalid Token; unsupported variable assignment token");
+                    }
                     break;
 
                 case "clear":

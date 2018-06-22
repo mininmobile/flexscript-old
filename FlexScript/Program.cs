@@ -14,13 +14,13 @@ namespace FlexScript {
             // Parse command-line arguments
             if (args.Length == 0) {
                 Console.WriteLine("FlexScript [Version 3.0+]");
-                Console.WriteLine("(ɔ) 2018 Minin/Zvava. Licensed under MIT.");
+                Console.WriteLine("(copyleft) 2018 Minin/Zvava. Licensed under MIT.");
 
                 // Launch Console
                 bool running = true;
                 while (running) {
                     // Get user input
-                    Console.Write("> ");
+                    Console.Write("\n> ");
                     string input = Console.ReadLine();
 
                     // Parse user input

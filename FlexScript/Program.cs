@@ -132,6 +132,20 @@ namespace FlexScript {
                     // Clear console
                     Console.Clear();
                     break;
+
+                case "background":
+                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
+
+                    // Change console color
+                    Console.BackgroundColor = getColors()[command[1]];
+                    break;
+
+                case "color":
+                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
+
+                    // Change console foregrund color
+                    Console.ForegroundColor = getColors()[command[1]];
+                    break;
                     
                 case "var":
                     if (commandLength < 3) throw new Exception("Invalid Token; command expected arguments");
@@ -233,20 +247,6 @@ namespace FlexScript {
                         default:
                             throw new Exception("Invalid Token; unsupported variable assignment token");
                     }
-                    break;
-
-                case "background":
-                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
-
-                    // Change console color
-                    Console.BackgroundColor = getColors()[command[1]];
-                    break;
-
-                case "color":
-                    if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
-
-                    // Change console foregrund color
-                    Console.ForegroundColor = getColors()[command[1]];
                     break;
 
                 default:

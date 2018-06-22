@@ -19,6 +19,7 @@ namespace FlexScript {
                 // Check for sufficient arguments
                 if (args.Length > 1) {
                     if (File.Exists(args[1])) {
+                        // If file exists, parse file
                         ParseFile(args[0], variables);
                     } else {
                         throw new Exception("Invalid Arguments; invalid file specified");
@@ -27,7 +28,7 @@ namespace FlexScript {
                     throw new Exception("Invalid Arguments; asked to run file without specifying file");
                 }
             } else if (File.Exists(args[0])) {
-                // Parse File
+                // Parse file
                 ParseFile(args[0], variables);
             } else {
                 throw new Exception("Invalid Arguments");
@@ -69,6 +70,7 @@ namespace FlexScript {
                 int close = token.IndexOf("}");
                 // If token matches variables criterea
                 if (token.StartsWith("{") && close != -1) {
+                    // Replace variable placeholder with variable's contents
                     command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
                 }
             }
@@ -78,24 +80,26 @@ namespace FlexScript {
                 case "print":
                     if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
+                    // Output the rest of the line
                     Console.WriteLine(string.Join(" ", command.Skip(1)));
                     break;
 
                 case "pause":
-                    if (commandLength == 1) {
+                    if (commandLength == 1) { // If given no arguments, pause with output
                         Console.WriteLine("Press any key to continue...");
                         Console.ReadKey(true);
-                    } else if (commandLength == 2 && command[1] == "-s" || command[1] == "--silent") {
+                    } else if (commandLength == 2 && command[1] == "-s" || command[1] == "--silent") { // If given silent argument, pause with no output
                         Console.ReadKey(true);
-                    } else if (commandLength > 2 && command[1] == "-c" || command[1] == "--custom") {
+                    } else if (commandLength > 2 && command[1] == "-c" || command[1] == "--custom") { // If given custom argument, pause with custom output
                         Console.WriteLine(string.Join(" ", command.Skip(2)));
                         Console.ReadKey(true);
-                    } else {
+                    } else { // This should neven happen lol
                         throw new Exception("error undefined");
                     }
                     break;
 
                 case "clear":
+                    // Clear console
                     Console.Clear();
                     break;
 
@@ -133,12 +137,14 @@ namespace FlexScript {
                 case "background":
                     if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
+                    // Change console color
                     Console.BackgroundColor = getColors()[command[1]];
                     break;
 
                 case "color":
                     if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
+                    // Change console foregrund color
                     Console.ForegroundColor = getColors()[command[1]];
                     break;
 

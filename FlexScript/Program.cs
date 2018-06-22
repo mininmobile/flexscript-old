@@ -11,13 +11,18 @@ namespace FlexScript {
             // Create variables container
             Dictionary<string, string> variables = new Dictionary<string, string>();
 
+            // Set title
+            Console.Title = "FLXVR30:/Minin/Zvava";
+
             // Parse command-line arguments
             if (args.Length == 0) {
+                // Draw metadata header
                 Console.ForegroundColor = ConsoleColor.Green; Console.Write(Environment.UserName.ToLower() + "@FlexScript ");
                 Console.ForegroundColor = ConsoleColor.Magenta;  Console.Write("FLXVR30 ");
                 Console.ForegroundColor = ConsoleColor.Yellow;  Console.Write("Minin/Zvava ");
                 Console.ForegroundColor = ConsoleColor.Cyan;  Console.Write("(MIT)");
 
+                // Reset foreground color
                 Console.ForegroundColor = ConsoleColor.Gray;
 
                 // Launch Console

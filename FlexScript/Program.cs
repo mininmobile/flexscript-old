@@ -12,22 +12,16 @@ namespace FlexScript {
             Dictionary<string, string> variables = new Dictionary<string, string>();
 
             // Set title
-            Console.Title = "FLXVR30:/Minin/Zvava";
+            Console.Title = "FLXVR30:/c/Minin/Zvava";
 
             // Parse command-line arguments
             if (args.Length == 0) {
-                // Draw metadata header
-                Console.ForegroundColor = ConsoleColor.Green; Console.Write(Environment.UserName.ToLower() + "@FlexScript ");
-                Console.ForegroundColor = ConsoleColor.Magenta;  Console.Write("FLXVR30 ");
-                Console.ForegroundColor = ConsoleColor.Yellow;  Console.Write("Minin/Zvava ");
-                Console.ForegroundColor = ConsoleColor.Cyan;  Console.Write("(MIT)");
-
-                // Reset foreground color
-                Console.ForegroundColor = ConsoleColor.Gray;
-
                 // Launch Console
                 bool running = true;
                 while (running) {
+                    // Draw metadata header
+                    printMetadataHeader();
+                    
                     // Get user input
                     Console.Write("\n$ ");
                     string input = Console.ReadLine();
@@ -192,6 +186,17 @@ namespace FlexScript {
         #endregion
 
         #region Helper Functions
+        static private void printMetadataHeader() {
+            // Draw metadata header
+            Console.ForegroundColor = ConsoleColor.Green; Console.Write("\n" + Environment.UserName.ToLower() + "@FlexScript ");
+            Console.ForegroundColor = ConsoleColor.Magenta; Console.Write("FLXVR30 ");
+            Console.ForegroundColor = ConsoleColor.Yellow; Console.Write("~/Minin/Zvava ");
+            Console.ForegroundColor = ConsoleColor.Cyan; Console.Write("(MIT)");
+
+            // Reset foreground color
+            Console.ForegroundColor = ConsoleColor.Gray;
+        }
+
         static private Dictionary<string, ConsoleColor> getColors() {
             // Return dictionary of the 16 supported terminal colors
             return new Dictionary<string, ConsoleColor>() {

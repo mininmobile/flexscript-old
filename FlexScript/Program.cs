@@ -13,14 +13,18 @@ namespace FlexScript {
 
             // Parse command-line arguments
             if (args.Length == 0) {
-                Console.WriteLine("FlexScript [Version 3.0+]");
-                Console.WriteLine("(copyleft) 2018 Minin/Zvava. Licensed under MIT.");
+                Console.ForegroundColor = ConsoleColor.Green; Console.Write("console@FlexScript ");
+                Console.ForegroundColor = ConsoleColor.Magenta;  Console.Write("FLXVR30 ");
+                Console.ForegroundColor = ConsoleColor.Yellow;  Console.Write("Minin/Zvava ");
+                Console.ForegroundColor = ConsoleColor.Cyan;  Console.Write("(MIT)");
+
+                Console.ForegroundColor = ConsoleColor.Gray;
 
                 // Launch Console
                 bool running = true;
                 while (running) {
                     // Get user input
-                    Console.Write("\n> ");
+                    Console.Write("\n$ ");
                     string input = Console.ReadLine();
 
                     // Parse user input

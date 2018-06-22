@@ -109,24 +109,25 @@ namespace FlexScript {
                     switch (command[2]) {
                         case "=":
                             if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = string.Join(" ", command.Skip(3));
+                                variables[command[1]] = string.Join(" ", command.Skip(3)); // Re-assign variable
                             else
-                                variables.Add(command[1], string.Join(" ", command.Skip(3)));
+                                variables.Add(command[1], string.Join(" ", command.Skip(3))); // Create new variable
                             break;
 
                         case "<=":
+                            // Output question
                             Console.Write(string.Join(" ", command.Skip(3)));
                             if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = Console.ReadLine();
+                                variables[command[1]] = Console.ReadLine(); // Re-assign variable to input
                             else
-                                variables.Add(command[1], Console.ReadLine());
+                                variables.Add(command[1], Console.ReadLine()); // Create new variable with input
                             break;
 
                         case "<":
                             if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = Console.ReadLine();
+                                variables[command[1]] = Console.ReadLine(); // Re-assign variable to input
                             else
-                                variables.Add(command[1], Console.ReadLine());
+                                variables.Add(command[1], Console.ReadLine()); // Create new variable with input
                             break;
 
                         default:

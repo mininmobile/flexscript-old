@@ -193,6 +193,19 @@ namespace FlexScript {
                             variables[command[1]] = multSum.ToString();
                             break;
 
+                        case "/=":
+                            // Create total result
+                            int divSum = int.Parse(command[3]);
+                            // For each numeral to divide
+                            foreach (string value in command.Skip(4)) {
+                                // Convert value to number and divide the total by it
+                                divSum /= int.Parse(value);
+                            }
+
+                            // Set variable to total
+                            variables[command[1]] = divSum.ToString();
+                            break;
+
                         default:
                             throw new Exception("Invalid Token; unsupported variable assignment token");
                     }

@@ -13,8 +13,25 @@ namespace FlexScript {
 
             // Parse command-line arguments
             if (args.Length == 0) {
+                Console.WriteLine("FlexScript [Version 3.0+]");
+                Console.WriteLine("(ɔ) 2018 Minin/Zvava. Licensed under MIT.");
+
                 // Launch Console
-                Console.WriteLine("Launched FlexScript Console");
+                bool running = true;
+                while (running) {
+                    // Get user input
+                    Console.Write("> ");
+                    string input = Console.ReadLine();
+
+                    // Parse user input
+                    try {
+                        ParseLine(input, variables);
+                    } catch (Exception e) {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\t" + e.Message);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                }
             } else if (args[0] == "-f" || args[0] == "--file") {
                 // Check for sufficient arguments
                 if (args.Length > 1) {
@@ -33,8 +50,6 @@ namespace FlexScript {
             } else {
                 throw new Exception("Invalid Arguments");
             }
-
-            Console.ReadKey();
         }
 
         #region Parser Functions

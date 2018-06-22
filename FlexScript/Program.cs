@@ -132,32 +132,39 @@ namespace FlexScript {
                     // Clear console
                     Console.Clear();
                     break;
-
+                    
                 case "var":
                     if (commandLength < 3) throw new Exception("Invalid Token; command expected arguments");
 
                     switch (command[2]) {
                         case "=":
-                            if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = string.Join(" ", command.Skip(3)); // Re-assign variable
-                            else
-                                variables.Add(command[1], string.Join(" ", command.Skip(3))); // Create new variable
+                            // Set variable to value
+                            variables[command[1]] = string.Join(" ", command.Skip(3));
                             break;
 
                         case "<=":
                             // Output question
                             Console.Write(string.Join(" ", command.Skip(3)));
-                            if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = Console.ReadLine(); // Re-assign variable to input
-                            else
-                                variables.Add(command[1], Console.ReadLine()); // Create new variable with input
+                            // Set variable to input
+                            variables[command[1]] = Console.ReadLine();
                             break;
 
                         case "<":
-                            if (variables.Keys.Contains(command[1]))
-                                variables[command[1]] = Console.ReadLine(); // Re-assign variable to input
-                            else
-                                variables.Add(command[1], Console.ReadLine()); // Create new variable with input
+                            // Set variable to input
+                            variables[command[1]] = Console.ReadLine();
+                            break;
+
+                        case "+=":
+                            // Create total result
+                            int total = 0;
+                            // For each numeral to add
+                            foreach (string value in command.Skip(3)) {
+                                // Convert value to number and add it to total
+                                total += int.Parse(value);
+                            }
+
+                            // Set variable to total
+                            variables[command[1]] = total.ToString();
                             break;
 
                         default:

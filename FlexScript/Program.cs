@@ -13,7 +13,7 @@ namespace FlexScript {
 
             // Parse command-line arguments
             if (args.Length == 0) {
-                Console.ForegroundColor = ConsoleColor.Green; Console.Write("console@FlexScript ");
+                Console.ForegroundColor = ConsoleColor.Green; Console.Write(Environment.UserName.ToLower() + "@FlexScript ");
                 Console.ForegroundColor = ConsoleColor.Magenta;  Console.Write("FLXVR30 ");
                 Console.ForegroundColor = ConsoleColor.Yellow;  Console.Write("Minin/Zvava ");
                 Console.ForegroundColor = ConsoleColor.Cyan;  Console.Write("(MIT)");

@@ -156,15 +156,28 @@ namespace FlexScript {
 
                         case "+=":
                             // Create total result
-                            int total = 0;
+                            int addSum = 0;
                             // For each numeral to add
                             foreach (string value in command.Skip(3)) {
                                 // Convert value to number and add it to total
-                                total += int.Parse(value);
+                                addSum += int.Parse(value);
                             }
 
                             // Set variable to total
-                            variables[command[1]] = total.ToString();
+                            variables[command[1]] = addSum.ToString();
+                            break;
+
+                        case "-=":
+                            // Create total result
+                            int minSum = int.Parse(command[3]);
+                            // For each numeral to add
+                            foreach (string value in command.Skip(4)) {
+                                // Convert value to number and add it to total
+                                minSum -= int.Parse(value);
+                            }
+
+                            // Set variable to total
+                            variables[command[1]] = minSum.ToString();
                             break;
 
                         default:

@@ -156,9 +156,9 @@ namespace FlexScript {
 
                         case "+=":
                             // Create total result
-                            int addSum = 0;
+                            int addSum = int.Parse(command[3]);
                             // For each numeral to add
-                            foreach (string value in command.Skip(3)) {
+                            foreach (string value in command.Skip(4)) {
                                 // Convert value to number and add it to total
                                 addSum += int.Parse(value);
                             }

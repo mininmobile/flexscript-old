@@ -27,6 +27,7 @@ namespace FlexScript {
                     try {
                         ParseLine(input, variables);
                     } catch (Exception e) {
+                        // Output error
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("\t" + e.Message);
                         Console.ForegroundColor = ConsoleColor.Gray;
@@ -61,7 +62,18 @@ namespace FlexScript {
 
             // Parse each input line in file
             foreach (string line in lines) {
-                ParseLine(line, variables);
+                try {
+                    ParseLine(line, variables);
+                } catch (Exception e) {
+                    // Output error
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("\t" + e.Message);
+                    Console.ForegroundColor = ConsoleColor.Gray;
+                    // Pause
+                    Console.ReadKey(true);
+                    // Stop parsing
+                    break;
+                }
             }
         }
 

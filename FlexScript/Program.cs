@@ -157,10 +157,16 @@ namespace FlexScript {
                         case "+=":
                             // Create total result
                             int addSum = int.Parse(command[3]);
-                            // For each numeral to add
-                            foreach (string value in command.Skip(4)) {
-                                // Convert value to number and add it to total
-                                addSum += int.Parse(value);
+
+                            if (commandLength == 4) {
+                                // Add to current variable's content
+                                addSum += int.Parse(variables[command[1]]);
+                            } else {
+                                // For each numeral to add
+                                foreach (string value in command.Skip(4)) {
+                                    // Convert value to number and add it to total
+                                    addSum += int.Parse(value);
+                                }
                             }
 
                             // Set variable to total
@@ -170,10 +176,16 @@ namespace FlexScript {
                         case "-=":
                             // Create total result
                             int minSum = int.Parse(command[3]);
-                            // For each numeral to subtract
-                            foreach (string value in command.Skip(4)) {
-                                // Convert value to number and subtract it from total
-                                minSum -= int.Parse(value);
+
+                            if (commandLength == 4) {
+                                // Take from current variable's content by number
+                                minSum -= int.Parse(variables[command[1]]);
+                            } else {
+                                // For each numeral to subtract
+                                foreach (string value in command.Skip(4)) {
+                                    // Convert value to number and subtract it from total
+                                    minSum -= int.Parse(value);
+                                }
                             }
 
                             // Set variable to total
@@ -183,10 +195,16 @@ namespace FlexScript {
                         case "*=":
                             // Create total result
                             int multSum = int.Parse(command[3]);
-                            // For each numeral to multiply
-                            foreach (string value in command.Skip(4)) {
-                                // Convert value to number and multiply it by total
-                                multSum *= int.Parse(value);
+
+                            if (commandLength == 4) {
+                                // Multiply by current variable's content
+                                multSum *= int.Parse(variables[command[1]]);
+                            } else {
+                                // For each numeral to multiply
+                                foreach (string value in command.Skip(4)) {
+                                    // Convert value to number and multiply it by total
+                                    multSum *= int.Parse(value);
+                                }
                             }
 
                             // Set variable to total
@@ -196,10 +214,16 @@ namespace FlexScript {
                         case "/=":
                             // Create total result
                             int divSum = int.Parse(command[3]);
-                            // For each numeral to divide
-                            foreach (string value in command.Skip(4)) {
-                                // Convert value to number and divide the total by it
-                                divSum /= int.Parse(value);
+
+                            if (commandLength == 4) {
+                                // Divide current variable's content by number
+                                divSum /= int.Parse(variables[command[1]]);
+                            } else {
+                                // For each numeral to divide
+                                foreach (string value in command.Skip(4)) {
+                                    // Convert value to number and divide the total by it
+                                    divSum /= int.Parse(value);
+                                }
                             }
 
                             // Set variable to total

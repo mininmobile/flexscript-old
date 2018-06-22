@@ -13,8 +13,10 @@ namespace FlexScript {
 
             // Parse command-line arguments
             if (args.Length == 0) {
+                // Launch Console
                 Console.WriteLine("Launched FlexScript Console");
             } else if (args[0] == "-f" || args[0] == "--file") {
+                // Check for sufficient arguments
                 if (args.Length > 1) {
                     if (File.Exists(args[1])) {
                         ParseFile(args[0], variables);
@@ -25,6 +27,7 @@ namespace FlexScript {
                     throw new Exception("Invalid Arguments; asked to run file without specifying file");
                 }
             } else if (File.Exists(args[0])) {
+                // Parse File
                 ParseFile(args[0], variables);
             } else {
                 throw new Exception("Invalid Arguments");
@@ -59,9 +62,12 @@ namespace FlexScript {
 
             // Formats variables into variable contents
             for (int i = 0; i < commandLength; i++) {
+                // Get token
                 string token = command[i];
 
+                // Get Closing Bracket
                 int close = token.IndexOf("}");
+                // If token matches variables criterea
                 if (token.StartsWith("{") && close != -1) {
                     command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
                 }

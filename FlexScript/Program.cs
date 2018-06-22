@@ -170,14 +170,27 @@ namespace FlexScript {
                         case "-=":
                             // Create total result
                             int minSum = int.Parse(command[3]);
-                            // For each numeral to add
+                            // For each numeral to subtract
                             foreach (string value in command.Skip(4)) {
-                                // Convert value to number and add it to total
+                                // Convert value to number and subtract it from total
                                 minSum -= int.Parse(value);
                             }
 
                             // Set variable to total
                             variables[command[1]] = minSum.ToString();
+                            break;
+
+                        case "*=":
+                            // Create total result
+                            int multSum = int.Parse(command[3]);
+                            // For each numeral to multiply
+                            foreach (string value in command.Skip(4)) {
+                                // Convert value to number and multiply it by total
+                                multSum *= int.Parse(value);
+                            }
+
+                            // Set variable to total
+                            variables[command[1]] = multSum.ToString();
                             break;
 
                         default:

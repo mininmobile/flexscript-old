@@ -150,7 +150,7 @@ namespace FlexScript {
 				case "if":
 					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'if'");
 
-					int parseState = 0;
+					int lexState = 0;
 
 					List<string> original = new List<string>();
 					string comparator = "";
@@ -158,20 +158,20 @@ namespace FlexScript {
 					string result = "";
 
 					foreach (string token in command.Skip(1)) {
-						if (parseState == 0) {
+						if (lexState == 0) {
 							if (getComprarators().Contains(token)) {
 								comparator = token;
-								parseState++;
+								lexState++;
 							} else {
 								original.Add(token);
 							}
-						} else if (parseState == 1) {
+						} else if (lexState == 1) {
 							if (token == "then") {
-								parseState++;
+								lexState++;
 							} else {
 								compare.Add(token);
 							}
-						} else if (parseState == 2) {
+						} else if (lexState == 2) {
 							result += token + " ";
 						}
 					}

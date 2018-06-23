@@ -50,17 +50,6 @@ var foo = bar
 print foo{foo} // output is 'foobar'
 ```
 
-### If Statements
-```bash
-var x = 5
-var y = 5
-var foo = bar
-var bar = foo
-
-if {x} == {y} then print match! // output is 'match!'
-if {foo} != {bar} then print !match // output is '!match'
-```
-
 ### User Input
 ```bash
 var input <= Enter something: // Gets user input, outputs 'Enter something:'
@@ -80,4 +69,15 @@ var c *= 4 2 8 8 // c is '512'
 
 var d = {c} // d is '512', value of c
 var d /= 8 // d is '64'
+```
+
+### If Statements
+```bash
+var x = 5
+var y = 5
+var foo = bar
+var bar = foo
+
+if {x} == {y} then print match! // output is 'match!'
+if {foo} != {bar} then print !match // output is '!match'
 ```

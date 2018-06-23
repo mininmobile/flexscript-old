@@ -176,8 +176,13 @@ namespace FlexScript {
 						}
 					}
 
-					if (original.SequenceEqual(compare)) {
-						ParseLine(result, variables);
+					switch (comparator) {
+						case "==":
+							if (original.SequenceEqual(compare)) ParseLine(result, variables);
+							break;
+
+						default:
+							throw new Exception("Invalid Statement; unsupported comparator used in 'if'");
 					}
 					break;
 

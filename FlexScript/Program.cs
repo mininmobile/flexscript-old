@@ -94,7 +94,7 @@ namespace FlexScript {
 			// Format command variables
 			if (command[0] != "for") formatCommandVariables(command, commandLength, variables);
 
-			// Command parser
+			#region Command parser
 			switch (command[0]) {
 				case "print":
 					if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
@@ -181,7 +181,6 @@ namespace FlexScript {
 					}
 					break;
 				#endregion
-
 
 				#region if
 				case "if":
@@ -341,23 +340,30 @@ namespace FlexScript {
 				default:
 					throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
 			}
+			#endregion
 		}
 		#endregion
 
 		#region Helper Functions
 		static private void formatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
-			// Formats variables into variable contents
-			for (int i = 0; i < commandLength; i++) {
-				// Get token
-				string token = command[i];
+			try {
+				// Formats variables into variable contents
+				for (int i = 0; i < commandLength; i++) {
+					// Get token
+					string token = command[i];
 
-				// Get Closing Bracket
-				int close = token.IndexOf("}");
-				// If token matches variables criterea
-				if (token.StartsWith("{") && close != -1) {
-					// Replace variable placeholder with variable's contents
-					command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+					// Get Closing Bracket
+					int close = token.IndexOf("}");
+					// If token matches variables criterea
+					if (token.StartsWith("{") && close != -1) {
+						// Replace variable placeholder with variable's contents
+						command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+					}
 				}
+			} catch (Exception e) {
+				if (e.Message == "The given key was not present in the dictionary.") throw new Exception("Invalid Token; variable doesn't exist");
+				
+				throw e;
 			}
 		}
 

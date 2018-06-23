@@ -159,7 +159,7 @@ namespace FlexScript {
 
 					foreach (string token in command.Skip(1)) {
 						if (parseState == 0) {
-							if (token == "==") {
+							if (token == "==" || token == "!=") {
 								comparator = token;
 								parseState++;
 							} else {
@@ -179,6 +179,10 @@ namespace FlexScript {
 					switch (comparator) {
 						case "==":
 							if (original.SequenceEqual(compare)) ParseLine(result, variables);
+							break;
+
+						case "!=":
+							if (!original.SequenceEqual(compare)) ParseLine(result, variables);
 							break;
 
 						default:

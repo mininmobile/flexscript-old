@@ -23,6 +23,27 @@ In FlexScript, everything is stored as a string, unless it needs to be converted
 print Hello, World! // output is 'Hello, World!'
 ```
 
+### Pause
+```bash
+print I hope you have a nice day
+
+pause // Outputs 'Press any key to continue...' and waits for user keypresss
+
+pause -s // Applying arguments -s or --silent outputs nothing and waits for user keypress
+
+pause -c Press any key... // Applying arguments -c or --custom outputs custom text (`Press any key...` in this case) and waits for user keypress
+
+print SIKE!
+```
+
+### Colors
+```bash
+background white // Set background color to white
+color black // Set foreground color to black
+
+clear // Clear the terminal window, applying colors
+```
+
 ### Variables
 ```bash
 var foo = bar

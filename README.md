@@ -14,6 +14,9 @@ FlexScript uses `//` for comments, anything after `//` will be ignored.
 ### Variables
 To define and interact with variables, the command is `var`, you do not need to specify types.
 
+### Loops
+There are 2 types of loops, `for` and `while`, `for` is like a swiss army knife and `while` is generic. (while is not implemented)
+
 ### Types
 In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string, see `Math` under `Examples`.
 
@@ -76,6 +79,11 @@ var d /= 8 // d is '64'
 var x = 5
 var y = 5
 
-if {x} == {y} then print match! // output is 'match!'
-if {x} != {y} then print !match // outputs nothing
+if {x} == {y} then print match! // Output is 'match!'
+if {x} != {y} then print !match // Outputs nothing
+```
+
+### For/times Loop
+```bash
+for i times 10 do print {i} // Outputs numbers '1' through '10'
 ```

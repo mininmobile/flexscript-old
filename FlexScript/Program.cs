@@ -146,7 +146,42 @@ namespace FlexScript {
 					// Change console foregrund color
 					Console.ForegroundColor = getColors()[command[1]];
 					break;
-                    
+
+				case "if":
+					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'if'");
+
+					int parseState = 0;
+
+					List<string> original = new List<string>();
+					string comparator = "";
+					List<string> compare = new List<string>();
+					string result = "";
+
+					foreach (string token in command.Skip(1)) {
+						if (parseState == 0) {
+							if (token == "==") {
+								comparator = token;
+								parseState++;
+							} else {
+								original.Add(token);
+							}
+						} else if (parseState == 1) {
+							if (token == "then") {
+								parseState++;
+							} else {
+								compare.Add(token);
+							}
+						} else if (parseState == 2) {
+							result += token + " ";
+						}
+					}
+
+					if (original.SequenceEqual(compare)) {
+						ParseLine(result, variables);
+					}
+					break;
+
+				#region var
 				case "var":
 					if (commandLength < 3) throw new Exception("Invalid Token; command expected arguments");
 
@@ -248,6 +283,7 @@ namespace FlexScript {
 							throw new Exception("Invalid Token; unsupported variable assignment token");
 					}
 					break;
+					#endregion
 
 				default:
 					throw new Exception("Invalid Token; invalid command '" + command[0] + "'");

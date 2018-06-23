@@ -91,7 +91,7 @@ namespace FlexScript {
 			List<string> command = line.Split(' ').ToList();
 			int commandLength = command.ToArray().Length;
 
-			// Format variables
+			// Format command variables
 			if (command[0] != "for") formatCommandVariables(command, commandLength, variables);
 
 			// Command parser
@@ -154,16 +154,25 @@ namespace FlexScript {
 					// Switch for type of loop
 					switch (type) {
 						case "times":
+							// Get duration of loop
 							int duration = int.Parse(array);
+							// Add iterator to variables
 							variables.Add(iterator, "0");
+
 							for (int i = 0; i < duration; i++) {
+								// Update iterator variable
 								variables[iterator] = (i + 1).ToString();
 
+								// Convert result to list
 								List<string> resultCommand = result.Split(' ').ToList();
+								// Format command variables
 								formatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
 
+								// Convert list to string and parse
 								ParseLine(string.Join(" ", resultCommand), variables);
 							}
+
+							// Remove iterator from variables
 							variables.Remove(iterator);
 							break;
 

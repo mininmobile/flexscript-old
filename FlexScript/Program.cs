@@ -147,41 +147,48 @@ namespace FlexScript {
 					Console.ForegroundColor = getColors()[command[1]];
 					break;
 
+				#region if
 				case "if":
 					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'if'");
 
+					// Create method to get state of lexxing
 					int lexState = 0;
 
+					// Create lexxing outputs
 					List<string> original = new List<string>();
 					string comparator = "";
 					List<string> compare = new List<string>();
 					string result = "";
 
+					// For each token in statement
 					foreach (string token in command.Skip(1)) {
-						if (lexState == 0) {
-							if (getComprarators().Contains(token)) {
+						if (lexState == 0) { // While lexxing first half of statement
+							if (getComprarators().Contains(token)) { // If done, go to next half
 								comparator = token;
 								lexState++;
-							} else {
+							} else { // If not done, add tokens to original
 								original.Add(token);
 							}
-						} else if (lexState == 1) {
-							if (token == "then") {
+						} else if (lexState == 1) { // While lexxing second half of statement
+							if (token == "then") { // If done, go to result
 								lexState++;
-							} else {
+							} else { // If not done, add tokens to compare
 								compare.Add(token);
 							}
-						} else if (lexState == 2) {
+						} else if (lexState == 2) { // While lexxing result, add tokens to result
 							result += token + " ";
 						}
 					}
 
+					// Switch for type of comparators
 					switch (comparator) {
 						case "==":
+							// If 'equals' compratator, check if original and compare are equal
 							if (original.SequenceEqual(compare)) ParseLine(result, variables);
 							break;
 
 						case "!=":
+							// If 'not equals' compratator, check if original and compare are not equal
 							if (!original.SequenceEqual(compare)) ParseLine(result, variables);
 							break;
 
@@ -189,6 +196,7 @@ namespace FlexScript {
 							throw new Exception("Invalid Statement; unsupported comparator used in 'if'");
 					}
 					break;
+				#endregion
 
 				#region var
 				case "var":
@@ -292,7 +300,7 @@ namespace FlexScript {
 							throw new Exception("Invalid Token; unsupported variable assignment token");
 					}
 					break;
-					#endregion
+				#endregion
 
 				default:
 					throw new Exception("Invalid Token; invalid command '" + command[0] + "'");

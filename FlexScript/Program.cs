@@ -100,7 +100,7 @@ namespace FlexScript {
 			if (command[0] != "for") formatCommandVariables(command, commandLength, variables);
 
 			#region Command parser
-			switch (command[0]) {
+			if (command[0] != "") switch (command[0]) {
 				case "print":
 					if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 

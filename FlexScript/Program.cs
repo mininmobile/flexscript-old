@@ -244,6 +244,18 @@ namespace FlexScript {
 							if (greatX > greatY) ParseLine(ifResult, contexti, context, variables);
 							break;
 
+						case "<=":
+							int lessEqualX = int.Parse(string.Join("", original));
+							int lessEqualY = int.Parse(string.Join("", compare));
+							if (lessEqualX <= lessEqualY) ParseLine(ifResult, contexti, context, variables);
+							break;
+
+						case ">=":
+							int greatEqualX = int.Parse(string.Join("", original));
+							int greatEqualY = int.Parse(string.Join("", compare));
+							if (greatEqualX >= greatEqualY) ParseLine(ifResult, contexti, context, variables);
+							break;
+
 						default:
 							throw new Exception("Invalid Statement; unsupported comparator used in 'if'");
 					}
@@ -400,7 +412,9 @@ namespace FlexScript {
 				"==",
 				"!=",
 				"<",
-				">"
+				">",
+				"<=",
+				">="
 			};
 		}
 

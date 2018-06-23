@@ -147,36 +147,70 @@ namespace FlexScript {
 					Console.ForegroundColor = getColors()[command[1]];
 					break;
 
+				#region for
+				case "for":
+					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'for'");
+
+					// Get loop parameters
+					string iterator = command[1];
+					string type = command[2];
+					string array = command[3];
+
+					// For each token in result
+					string result = "";
+					foreach (string token in command.Skip(5)) {
+						result += token + " ";
+					}
+
+					// Switch for type of loop
+					switch (type) {
+						case "times":
+							int duration = int.Parse(array);
+							variables.Add(iterator, "0");
+							for (int i = 0; i < duration; i++) {
+								variables[iterator] = (i + 1).ToString();
+								ParseLine(result, variables);
+							}
+							variables.Remove(iterator);
+							break;
+
+						default:
+							throw new Exception("Invalid Statement; unsupported comparator used in 'if'");
+					}
+					break;
+				#endregion
+
+
 				#region if
 				case "if":
 					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'if'");
 
 					// Create method to get state of lexxing
-					int lexState = 0;
+					int lexStateIf = 0;
 
 					// Create lexxing outputs
 					List<string> original = new List<string>();
 					string comparator = "";
 					List<string> compare = new List<string>();
-					string result = "";
+					string ifResult = "";
 
 					// For each token in statement
 					foreach (string token in command.Skip(1)) {
-						if (lexState == 0) { // While lexxing first half of statement
+						if (lexStateIf == 0) { // While lexxing first half of statement
 							if (getComprarators().Contains(token)) { // If done, go to next half
 								comparator = token;
-								lexState++;
+								lexStateIf++;
 							} else { // If not done, add tokens to original
 								original.Add(token);
 							}
-						} else if (lexState == 1) { // While lexxing second half of statement
+						} else if (lexStateIf == 1) { // While lexxing second half of statement
 							if (token == "then") { // If done, go to result
-								lexState++;
+								lexStateIf++;
 							} else { // If not done, add tokens to compare
 								compare.Add(token);
 							}
-						} else if (lexState == 2) { // While lexxing result, add tokens to result
-							result += token + " ";
+						} else if (lexStateIf == 2) { // While lexxing result, add tokens to result
+							ifResult += token + " ";
 						}
 					}
 
@@ -184,12 +218,12 @@ namespace FlexScript {
 					switch (comparator) {
 						case "==":
 							// If 'equals' compratator, check if original and compare are equal
-							if (original.SequenceEqual(compare)) ParseLine(result, variables);
+							if (original.SequenceEqual(compare)) ParseLine(ifResult, variables);
 							break;
 
 						case "!=":
 							// If 'not equals' compratator, check if original and compare are not equal
-							if (!original.SequenceEqual(compare)) ParseLine(result, variables);
+							if (!original.SequenceEqual(compare)) ParseLine(ifResult, variables);
 							break;
 
 						default:

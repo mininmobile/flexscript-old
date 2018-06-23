@@ -75,9 +75,7 @@ var d /= 8 // d is '64'
 ```bash
 var x = 5
 var y = 5
-var foo = bar
-var bar = foo
 
 if {x} == {y} then print match! // output is 'match!'
-if {foo} != {bar} then print !match // output is '!match'
+if {x} != {y} then print !match // outputs nothing
 ```

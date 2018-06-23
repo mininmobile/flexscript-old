@@ -28,7 +28,7 @@ namespace FlexScript {
 
 					// Parse user input
 					try {
-						ParseLine(input, variables);
+						ParseLine(input, 0, new List<string>(), variables);
 					} catch (Exception e) {
 						// Output error
 						Console.ForegroundColor = ConsoleColor.Red;
@@ -70,7 +70,7 @@ namespace FlexScript {
 				string line = lines.ToArray()[i];
 
 				try {
-					ParseLine(line, variables);
+					ParseLine(line, i, lines, variables);
 				} catch (Exception e) {
 					// Output error
 					Console.ForegroundColor = ConsoleColor.Red;
@@ -85,7 +85,7 @@ namespace FlexScript {
 			}
 		}
 
-		static private void ParseLine(string line, Dictionary<string, string> vars) {
+		static private void ParseLine(string line, int contexti, IEnumerable<string> context, Dictionary<string, string> vars) {
 			Dictionary<string, string> variables = vars;
 
 			// Removes comments from input line
@@ -174,7 +174,7 @@ namespace FlexScript {
 								formatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
 
 								// Convert list to string and parse
-								ParseLine(string.Join(" ", resultCommand), variables);
+								ParseLine(string.Join(" ", resultCommand), contexti, context, variables);
 							}
 
 							// Remove iterator from variables
@@ -224,12 +224,12 @@ namespace FlexScript {
 					switch (comparator) {
 						case "==":
 							// If 'equals' compratator, check if original and compare are equal
-							if (original.SequenceEqual(compare)) ParseLine(ifResult, variables);
+							if (original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "!=":
 							// If 'not equals' compratator, check if original and compare are not equal
-							if (!original.SequenceEqual(compare)) ParseLine(ifResult, variables);
+							if (!original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						default:

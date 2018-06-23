@@ -223,36 +223,44 @@ namespace FlexScript {
 					// Switch for type of comparators
 					switch (comparator) {
 						case "==":
-							// If 'equals' compratator, check if original and compare are equal
+							// Are original and compare are equal
 							if (original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "!=":
-							// If 'not equals' compratator, check if original and compare are not equal
+							// Are original and compare not equal
 							if (!original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "<":
+							// Convert original and compare to numbers
 							int lessX = int.Parse(string.Join("", original));
 							int lessY = int.Parse(string.Join("", compare));
+							// Is original or compare lesser
 							if (lessX < lessY) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case ">":
+							// Convert original and compare to numbers
 							int greatX = int.Parse(string.Join("", original));
 							int greatY = int.Parse(string.Join("", compare));
+							// Is original or compare greater
 							if (greatX > greatY) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "<=":
+							// Convert original and compare to numbers
 							int lessEqualX = int.Parse(string.Join("", original));
 							int lessEqualY = int.Parse(string.Join("", compare));
+							// Is original or compare lesser/equal
 							if (lessEqualX <= lessEqualY) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case ">=":
+							// Convert original and compare to numbers
 							int greatEqualX = int.Parse(string.Join("", original));
 							int greatEqualY = int.Parse(string.Join("", compare));
+							// Is original or compare greater/equal
 							if (greatEqualX >= greatEqualY) ParseLine(ifResult, contexti, context, variables);
 							break;
 

@@ -159,7 +159,7 @@ namespace FlexScript {
 
 					foreach (string token in command.Skip(1)) {
 						if (parseState == 0) {
-							if (token == "==" || token == "!=") {
+							if (getComprarators().Contains(token)) {
 								comparator = token;
 								parseState++;
 							} else {
@@ -310,6 +310,13 @@ namespace FlexScript {
 
 			// Reset foreground color
 			Console.ForegroundColor = ConsoleColor.Gray;
+		}
+
+		static private List<string> getComprarators() {
+			return new List<string>() {
+				"==",
+				"!="
+			};
 		}
 
 		static private Dictionary<string, ConsoleColor> getColors() {

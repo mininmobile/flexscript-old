@@ -158,7 +158,11 @@ namespace FlexScript {
 							variables.Add(iterator, "0");
 							for (int i = 0; i < duration; i++) {
 								variables[iterator] = (i + 1).ToString();
-								ParseLine(result, variables);
+
+								List<string> resultCommand = result.Split(' ').ToList();
+								formatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
+
+								ParseLine(string.Join(" ", resultCommand), variables);
 							}
 							variables.Remove(iterator);
 							break;

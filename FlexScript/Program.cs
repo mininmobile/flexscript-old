@@ -91,19 +91,8 @@ namespace FlexScript {
 			List<string> command = line.Split(' ').ToList();
 			int commandLength = command.ToArray().Length;
 
-			// Formats variables into variable contents
-			for (int i = 0; i < commandLength; i++) {
-				// Get token
-				string token = command[i];
-
-				// Get Closing Bracket
-				int close = token.IndexOf("}");
-				// If token matches variables criterea
-				if (token.StartsWith("{") && close != -1) {
-					// Replace variable placeholder with variable's contents
-					command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
-				}
-			}
+			// Format variables
+			if (command[0] != "for") formatCommandVariables(command, commandLength, variables);
 
 			// Command parser
 			switch (command[0]) {
@@ -343,6 +332,22 @@ namespace FlexScript {
 		#endregion
 
 		#region Helper Functions
+		static private void formatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
+			// Formats variables into variable contents
+			for (int i = 0; i < commandLength; i++) {
+				// Get token
+				string token = command[i];
+
+				// Get Closing Bracket
+				int close = token.IndexOf("}");
+				// If token matches variables criterea
+				if (token.StartsWith("{") && close != -1) {
+					// Replace variable placeholder with variable's contents
+					command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+				}
+			}
+		}
+
 		static private void printMetadataHeader() {
 			// Draw metadata header
 			Console.ForegroundColor = ConsoleColor.Green; Console.Write("\n" + Environment.UserName.ToLower() + "@FlexScript ");

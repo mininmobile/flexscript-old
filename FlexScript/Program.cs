@@ -32,7 +32,8 @@ namespace FlexScript {
 					} catch (Exception e) {
 						// Output error
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine("\t" + e.Message);
+						Console.WriteLine("\t$ | " + input);
+						Console.WriteLine("\n\t" + e.Message);
 						Console.ForegroundColor = ConsoleColor.Gray;
 					}
 				}
@@ -64,13 +65,17 @@ namespace FlexScript {
 			IEnumerable<string> lines = File.ReadLines(filePath);
 
 			// Parse each input line in file
-			foreach (string line in lines) {
+			for (int i = 0; i < lines.ToArray().Length; i++) {
+				// Get Line
+				string line = lines.ToArray()[i];
+
 				try {
 					ParseLine(line, variables);
 				} catch (Exception e) {
 					// Output error
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("\t" + e.Message);
+					Console.WriteLine("\t" + (i + 1) + " | " + line);
+					Console.WriteLine("\n\t" + e.Message);
 					Console.ForegroundColor = ConsoleColor.Gray;
 					// Pause
 					Console.ReadKey(true);

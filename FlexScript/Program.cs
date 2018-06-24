@@ -199,7 +199,6 @@ namespace FlexScript {
 					string comparator = "";
 					List<string> compare = new List<string>();
 					string ifResult = "";
-					CommandBlock ifBlock = new CommandBlock();
 
 					// For each token in statement
 					foreach (string token in command.Skip(1)) {
@@ -221,14 +220,11 @@ namespace FlexScript {
 						}
 					}
 
-					// If result action is a commandblock, generate new commandblock
-					if (ifResult == "( ") ifBlock = new CommandBlock(contexti, context.ToArray());
-
 					// Switch for type of comparators
 					switch (comparator) {
 						case "==":
 							// Are original and compare are equal
-							if (original.SequenceEqual(compare)) if (ifBlock.length != -1) parseBlock(ifBlock, variables); else ParseLine(ifResult, contexti, context, variables);
+							if (original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "!=":

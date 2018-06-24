@@ -238,13 +238,22 @@ namespace FlexScript {
 					// Switch for type of comparators
 					switch (comparator) {
 						case "==":
-								// Are original and compare are equal
-								if (original.SequenceEqual(compare)) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							// Are original and compare are equal
+							if (original.SequenceEqual(compare)) {
+								if (ifBlock != null) {
+									ParseBlock(ifBlock, variables);
+									contexti += ifBlock.length + 1;
+									} else {
+									ParseLine(ifResult, ref contexti, context, variables);
+								}
+							} else {
+								contexti += ifBlock.length + 1;
+							}
 							break;
 
 						case "!=":
 							// Are original and compare not equal
-							if (!original.SequenceEqual(compare)) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							if (!original.SequenceEqual(compare)) ParseLine(ifResult, ref contexti, context, variables);
 							break;
 
 						case "<":
@@ -252,7 +261,7 @@ namespace FlexScript {
 							int lessX = int.Parse(string.Join("", original));
 							int lessY = int.Parse(string.Join("", compare));
 							// Is original or compare lesser
-							if (lessX < lessY) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							if (lessX < lessY) ParseLine(ifResult, ref contexti, context, variables);
 							break;
 
 						case ">":
@@ -260,7 +269,7 @@ namespace FlexScript {
 							int greatX = int.Parse(string.Join("", original));
 							int greatY = int.Parse(string.Join("", compare));
 							// Is original or compare greater
-							if (greatX > greatY) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							if (greatX > greatY) ParseLine(ifResult, ref contexti, context, variables);
 							break;
 
 						case "<=":
@@ -268,7 +277,7 @@ namespace FlexScript {
 							int lessEqualX = int.Parse(string.Join("", original));
 							int lessEqualY = int.Parse(string.Join("", compare));
 							// Is original or compare lesser/equal
-							if (lessEqualX <= lessEqualY) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							if (lessEqualX <= lessEqualY) ParseLine(ifResult, ref contexti, context, variables);
 							break;
 
 						case ">=":
@@ -276,7 +285,7 @@ namespace FlexScript {
 							int greatEqualX = int.Parse(string.Join("", original));
 							int greatEqualY = int.Parse(string.Join("", compare));
 							// Is original or compare greater/equal
-							if (greatEqualX >= greatEqualY) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							if (greatEqualX >= greatEqualY) ParseLine(ifResult, ref contexti, context, variables);
 							break;
 
 						default:
@@ -397,17 +406,6 @@ namespace FlexScript {
 		#endregion
 
 		#region Helper Functions
-		static private void selectiveBlockParse(string result, CommandBlock block, ref int contexti, IEnumerable<string> context, Dictionary<string, string> vars) {
-			Dictionary<string, string> variables = vars;
-
-			if (block != null) {
-				ParseBlock(block, variables);
-				contexti += block.length + 1;
-			} else {
-				ParseLine(result, ref contexti, context, variables);
-			}
-		}
-
 		static private void formatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
 			try {
 				// Formats variables into variable contents

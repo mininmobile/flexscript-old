@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace FlexScript {
 	public class CommandBlock {
-		List<string> list;
-		string[] array;
-		int length;
+		public List<string> list = null;
+		public string[] array = null;
+		public int length = -1;
 
 		#region Constructors
+		public CommandBlock() {
+			// Create new empty command block
+		}
+
 		public CommandBlock(string[] lines) {
 			// Set commandblock's fields and properties
 			length = lines.Length;

@@ -238,8 +238,8 @@ namespace FlexScript {
 					// Switch for type of comparators
 					switch (comparator) {
 						case "==":
-								// Are original and compare are equal
-								if (original.SequenceEqual(compare)) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
+							// Are original and compare are equal
+							if (original.SequenceEqual(compare)) selectiveBlockParse(ifResult, ifBlock, ref contexti, context, variables); else contexti += ifBlock.length + 1;
 							break;
 
 						case "!=":
@@ -399,11 +399,14 @@ namespace FlexScript {
 		#region Helper Functions
 		static private void selectiveBlockParse(string result, CommandBlock block, ref int contexti, IEnumerable<string> context, Dictionary<string, string> vars) {
 			Dictionary<string, string> variables = vars;
-
-			if (block != null) {
+			
+			if (block != null) { // If result is a commandblock
+				// Parse result as commandblock
 				ParseBlock(block, variables);
+				// Move past commandblock
 				contexti += block.length + 1;
-			} else {
+			} else { // If result is a plain command
+				// Parse result as line
 				ParseLine(result, ref contexti, context, variables);
 			}
 		}

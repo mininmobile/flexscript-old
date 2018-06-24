@@ -47,7 +47,6 @@ namespace FlexScript {
 					}
 				}
 
-				// Set commandblock's fields and properties
 				array = list.ToArray();
 				length = array.Length;
 			} else {

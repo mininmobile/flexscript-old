@@ -18,9 +18,29 @@ namespace FlexScript {
 		}
 
 		public CommandBlock(List<string> lines) {
-			length = lines.ToArray().Length;
-			array = lines.ToArray();
 			list = lines;
+			array = lines.ToArray();
+			length = array.Length;
+		}
+
+		public CommandBlock(int contexti, string[] context) {
+			if (context[contexti].EndsWith("(")) {
+				for (int i = contexti; i < context.Length; i++) {
+					string line = context[i];
+
+					if (line == ")") {
+						break;
+					} else {
+						list.Add(line);
+					}
+				}
+
+				array = list.ToArray();
+				length = array.Length;
+			} else {
+				// This should never happen, unless the interpreter calls this specific constructor arbitrarily... somehow
+				throw new Exception("error undefined");
+			}
 		}
 		#endregion
 	}

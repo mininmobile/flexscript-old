@@ -85,16 +85,6 @@ namespace FlexScript {
 			}
 		}
 
-		static private void ParseBlock(CommandBlock block, Dictionary<string, string> vars) {
-			Dictionary<string, string> variables = vars;
-
-			// For each line in block
-			for (int i = 0; i < block.length; i++) {
-				// Parse line
-				ParseLine(block.array[i], i, block.array, variables);
-			}
-		}
-
 		static private void ParseLine(string line, int contexti, IEnumerable<string> context, Dictionary<string, string> vars) {
 			Dictionary<string, string> variables = vars;
 
@@ -238,7 +228,7 @@ namespace FlexScript {
 					switch (comparator) {
 						case "==":
 							// Are original and compare are equal
-							if (original.SequenceEqual(compare)) if (ifBlock.length != -1) ParseBlock(ifBlock, variables); else ParseLine(ifResult, contexti, context, variables);
+							if (original.SequenceEqual(compare)) if (ifBlock.length != -1) parseBlock(ifBlock, variables); else ParseLine(ifResult, contexti, context, variables);
 							break;
 
 						case "!=":

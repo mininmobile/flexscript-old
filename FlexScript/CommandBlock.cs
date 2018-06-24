@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FlexScript {
 	public class CommandBlock {
-		public List<string> list = null;
+		public List<string> list = new List<string>();
 		public string[] array = null;
 		public int length = -1;
 
@@ -32,6 +32,9 @@ namespace FlexScript {
 		public CommandBlock(int contexti, string[] context) {
 			// Check for valid use of constructor
 			if (context[contexti].EndsWith("(")) {
+				// Move up
+				contexti++;
+
 				// Add lines to list of commands
 				for (int i = contexti; i < context.Length; i++) {
 					// Get line from context

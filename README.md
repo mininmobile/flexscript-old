@@ -81,6 +81,8 @@ var y = 5
 
 if {x} == {y} then print match! // Output is 'match!'
 if {x} != {y} then print !match // Outputs nothing
+if {x} > {y} then print bigger than // Outputs nothing
+if {x} >= {y} then print bigger than or equal to // Oututs 'bigger than or equal to'
 ```
 
 ### For/times Loop

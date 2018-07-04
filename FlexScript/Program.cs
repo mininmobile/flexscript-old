@@ -207,7 +207,30 @@ namespace FlexScript {
 							variables.Remove(iterator);
 							break;
 
-						default:
+						case "in":
+							// Get array
+							string[] arr = string.Join(" ", array).Split(',');
+							// Add iterator to variables
+							variables[iterator] = "";
+
+							for (int i = 0; i < arr.Length; i++) {
+								// Update iterator variable
+								variables[iterator] = arr[i];
+
+								// Convert result to list
+								List<string> resultCommand = forResult.Split(' ').ToList();
+								// Format command variables
+								FormatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
+
+								// Convert list to string and parse
+								ParseLine(string.Join(" ", resultCommand), contexti, context, variables);
+							}
+
+							// Remove iterator from variables
+							variables.Remove(iterator);
+							break;
+
+							default:
 							throw new Exception("Invalid Statement; unsupported comparator used in 'for'");
 					}
 					break;

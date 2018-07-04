@@ -20,7 +20,7 @@ namespace FlexScript {
 				bool running = true;
 				while (running) {
 					// Draw metadata header
-					printMetadataHeader();
+					PrintMetadataHeader();
 
 					// Get user input
 					Console.Write("\n$ ");
@@ -97,7 +97,7 @@ namespace FlexScript {
 			int commandLength = command.ToArray().Length;
 
 			// Format command variables
-			if (command[0] != "for") formatCommandVariables(command, commandLength, variables);
+			if (command[0] != "for") FormatCommandVariables(command, commandLength, variables);
 
 			#region Command parser
 			if (command[0] != "") switch (command[0]) {
@@ -131,14 +131,14 @@ namespace FlexScript {
 					if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
 					// Change console color
-					Console.BackgroundColor = getColors()[command[1]];
+					Console.BackgroundColor = GetColors()[command[1]];
 					break;
 
 				case "color":
 					if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
 					// Change console foregrund color
-					Console.ForegroundColor = getColors()[command[1]];
+					Console.ForegroundColor = GetColors()[command[1]];
 					break;
 
 				#region for
@@ -171,7 +171,7 @@ namespace FlexScript {
 								// Convert result to list
 								List<string> resultCommand = result.Split(' ').ToList();
 								// Format command variables
-								formatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
+								FormatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
 
 								// Convert list to string and parse
 								ParseLine(string.Join(" ", resultCommand), contexti, context, variables);
@@ -203,7 +203,7 @@ namespace FlexScript {
 					// For each token in statement
 					foreach (string token in command.Skip(1)) {
 						if (lexStateIf == 0) { // While lexxing first half of statement
-							if (getComprarators().Contains(token)) { // If done, go to next half
+							if (GetComprarators().Contains(token)) { // If done, go to next half
 								comparator = token;
 								lexStateIf++;
 							} else { // If not done, add tokens to original
@@ -278,6 +278,13 @@ namespace FlexScript {
 						case "=":
 							// Set variable to value
 							variables[command[1]] = string.Join(" ", command.Skip(3));
+							break;
+
+						case "=[]":
+							// Create array variable
+							variables[command[1]] = string.Join(" ", command.Skip(3));
+							// Create length variable
+							variables[command[1] + ".length"] = variables[command[1]].Split(',').Length.ToString();
 							break;
 
 						case "<=":
@@ -382,7 +389,7 @@ namespace FlexScript {
 		#endregion
 
 		#region Helper Functions
-		static private void formatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
+		static private void FormatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
 			try {
 				// Formats variables into variable contents
 				for (int i = 0; i < commandLength; i++) {
@@ -404,7 +411,7 @@ namespace FlexScript {
 			}
 		}
 
-		static private void printMetadataHeader() {
+		static private void PrintMetadataHeader() {
 			// Draw metadata header
 			Console.ForegroundColor = ConsoleColor.Green; Console.Write("\n" + Environment.UserName.ToLower() + "@FlexScript ");
 			Console.ForegroundColor = ConsoleColor.Magenta; Console.Write("FLXVR30 ");
@@ -415,7 +422,7 @@ namespace FlexScript {
 			Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
-		static private List<string> getComprarators() {
+		static private List<string> GetComprarators() {
 			return new List<string>() {
 				"==",
 				"!=",
@@ -426,7 +433,7 @@ namespace FlexScript {
 			};
 		}
 
-		static private Dictionary<string, ConsoleColor> getColors() {
+		static private Dictionary<string, ConsoleColor> GetColors() {
 			// Return dictionary of the 16 supported terminal colors
 			return new Dictionary<string, ConsoleColor>() {
 				{"red", ConsoleColor.Red},

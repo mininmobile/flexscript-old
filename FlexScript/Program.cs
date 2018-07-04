@@ -285,6 +285,10 @@ namespace FlexScript {
 							variables[command[1]] = string.Join(" ", command.Skip(3));
 							// Create length variable
 							variables[command[1] + ".length"] = variables[command[1]].Split(',').Length.ToString();
+							// Create item variables
+							for (int i = 0; i < variables[command[1]].Split(',').Length; i++) {
+								variables[command[1] + "[" + i + "]"] = variables[command[1]].Split(',')[i];
+							}
 							break;
 
 						case "<=":

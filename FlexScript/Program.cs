@@ -97,7 +97,10 @@ namespace FlexScript {
 			int commandLength = command.ToArray().Length;
 
 			// Format command variables
-			if (command[0] != "for") FormatCommandVariables(command, commandLength, variables);
+			if (command[0] == "for")
+				FormatCommandVariables(command, commandLength, variables, true);
+			else
+				FormatCommandVariables(command, commandLength, variables);
 
 			#region Command parser
 			if (command[0] != "") switch (command[0]) {
@@ -145,31 +148,54 @@ namespace FlexScript {
 				case "for":
 					if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'for'");
 
-					// Get loop parameters
-					string iterator = command[1];
-					string type = command[2];
-					string array = command[3];
-
 					// For each token in result
 					string result = "";
 					foreach (string token in command.Skip(5)) {
 						result += token + " ";
+					}
+					// Create method to get state of lexxing
+					int lexStateFor = 0;
+
+					// Create lexxing outputs
+					string iterator = "";
+					string type = "";
+					List<string> array = new List<string>();
+					string forResult = "";
+
+					// For each token in statement
+					foreach (string token in command.Skip(1)) {
+						if (lexStateFor == 0) { // While lexxing first half of statement
+							if (new string[] {"times", "in"}.Contains(token)) { // If done, go to next half
+								type = token;
+								lexStateFor++;
+							} else { // If not done, set iterator
+								iterator += token;
+							}
+						} else if (lexStateFor == 1) { // While lexxing second half of statement
+							if (token == "then") { // If done, go to result
+								lexStateFor++;
+							} else { // If not done, add tokens to array
+								array.Add(token);
+							}
+						} else if (lexStateFor == 2) { // While lexxing result, add tokens to result
+							forResult += token + " ";
+						}
 					}
 
 					// Switch for type of loop
 					switch (type) {
 						case "times":
 							// Get duration of loop
-							int duration = int.Parse(array);
+							int duration = int.Parse(string.Join("", array));
 							// Add iterator to variables
-							variables.Add(iterator, "0");
+							variables[iterator] = "0";
 
 							for (int i = 0; i < duration; i++) {
 								// Update iterator variable
 								variables[iterator] = (i + 1).ToString();
 
 								// Convert result to list
-								List<string> resultCommand = result.Split(' ').ToList();
+								List<string> resultCommand = forResult.Split(' ').ToList();
 								// Format command variables
 								FormatCommandVariables(resultCommand, resultCommand.ToArray().Length, variables);
 
@@ -182,7 +208,7 @@ namespace FlexScript {
 							break;
 
 						default:
-							throw new Exception("Invalid Statement; unsupported comparator used in 'if'");
+							throw new Exception("Invalid Statement; unsupported comparator used in 'for'");
 					}
 					break;
 				#endregion

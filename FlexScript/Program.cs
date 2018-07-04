@@ -419,7 +419,7 @@ namespace FlexScript {
 		#endregion
 
 		#region Helper Functions
-		static private void FormatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables) {
+		static private void FormatCommandVariables(List<string> command, int commandLength, Dictionary<string, string> variables, bool ignore = false) {
 			try {
 				// Formats variables into variable contents
 				for (int i = 0; i < commandLength; i++) {
@@ -430,8 +430,10 @@ namespace FlexScript {
 					int close = token.IndexOf("}");
 					// If token matches variables criterea
 					if (token.StartsWith("{") && close != -1) {
-						// Replace variable placeholder with variable's contents
-						command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+						if (!(token.Substring(1, close - 1) == "i" && ignore)) {
+							// Replace variable placeholder with variable's contents
+							command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+						}
 					}
 				}
 			} catch (Exception e) {

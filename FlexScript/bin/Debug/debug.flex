@@ -1,2 +1,2 @@
-file rename test.txt to debug2.txt
+throw invalidtokenerror your mom is gay
 pause -s

@@ -1,5 +1,0 @@
-hello world
-this is a test file
-to test functionality of opening files...
-
-...with flexscript!

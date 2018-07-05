@@ -102,6 +102,27 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
+					case "throw":
+						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
+
+						// Get error message
+						string message = string.Join(" ", command.Skip(2));
+
+						// Get error type
+						string error = "Error; ";
+						switch (command[1]) {
+							case "error": error = "Error; "; break;
+
+							default: throw new Exception("Invalid Token; unsupported error used in 'throw'");
+						}
+
+						// Throw error
+						if (message.Length == 0)
+							throw new Exception(error + "undefined");
+						else
+							throw new Exception(error + message);
+						break;
+
 					case "goto":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
@@ -112,6 +133,7 @@ namespace FlexScript {
 						}
 						break;
 
+					#region file
 					case "file":
 						if (commandLength < 3) throw new Exception("Invalid Token; command expected argument");
 
@@ -208,6 +230,7 @@ namespace FlexScript {
 								throw new Exception("Invalid Token; unsupported file operation '" + command[1] + "' used in 'file'");
 						}
 						break;
+					#endregion
 
 					#region try
 					case "try":

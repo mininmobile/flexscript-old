@@ -48,7 +48,7 @@ namespace FlexScript {
 			// Format command variables
 			if (command[0] == "for")
 				FormatCommandVariables(command, commandLength, true);
-			else
+			else if (command[0] != "try")
 				FormatCommandVariables(command, commandLength);
 
 			#region Command parser
@@ -93,6 +93,10 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
+					case "goto":
+						// code
+						break;
+
 					case "try":
 						// Create method to get state of lexxing
 						int lexStateTry = 0;
@@ -108,7 +112,7 @@ namespace FlexScript {
 							if (lexStateTry == 0) { // While lexxing first half
 								if (token == "catch") {
 									lexStateTry++;
-								} else {
+								} else { // While lexxing second half
 									tryArray.Add(token);
 								}
 							} else if (lexStateTry == 1) {
@@ -116,8 +120,16 @@ namespace FlexScript {
 							}
 						}
 
-						tryResult = string.Join(" ", tryResult);
-						catchResult = string.Join(" ", catchResult);
+						tryResult = string.Join(" ", tryArray);
+						catchResult = string.Join(" ", catchArray);
+
+						try {
+							ParseLine(tryResult, contexti, context);
+						} catch (Exception e) {
+							variables["e"] = e.Message;
+							ParseLine(catchResult, contexti, context);
+							variables.Remove("e");
+						}
 						break;
 
 					#region for

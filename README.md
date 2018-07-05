@@ -124,3 +124,30 @@ for i times 10 do print {i} // Outputs numbers '1' through '10'
 var array = apple,banana,orange,strawberry
 for item in {array} then print {item} // prints current item from array
 ```
+
+### Files
+```bash
+// get contents of a file, seperate lines are split by commas, this creates a few variables:
+// 
+// file          : placeholder file variable
+// file.lines    : array of lines in file
+// file.lines[x] : get specific line from lines array
+// file.length   : get amount of lines in file
+
+file get myfile.txt
+
+// override a file with a line or lines, foo.txt after this command:
+// 
+// hello
+// world
+
+file write hello,world to foo.txt
+
+// append a line or lines to end of file, bar.txt after this command:
+// 
+// this line was already in this file
+// me too!
+// but not me
+
+file append but not me to bar.txt
+```

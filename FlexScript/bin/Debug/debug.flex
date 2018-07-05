@@ -1,2 +1,2 @@
-throw invalidtokenerror your mom is gay
+try throw invalidtokenerror your mom is undefined catch print {e}
 pause -s

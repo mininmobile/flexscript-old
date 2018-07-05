@@ -112,6 +112,8 @@ namespace FlexScript {
 						string error = "Error; ";
 						switch (command[1]) {
 							case "error": error = "Error; "; break;
+							case "invalidtokenerror": error = "Invalid Token; "; break;
+							case "invalidstatementerror": error = "Invalid Statement; "; break;
 
 							default: throw new Exception("Invalid Token; unsupported error used in 'throw'");
 						}

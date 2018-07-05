@@ -63,7 +63,7 @@ namespace FlexScript {
 				FormatCommandVariables(command, commandLength);
 
 			#region Command parser
-			if (command[0] != "") switch (command[0]) {
+			if (command[0] != "" && !command[0].StartsWith(":")) switch (command[0]) {
 					case "print":
 						if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
@@ -107,7 +107,11 @@ namespace FlexScript {
 					case "goto":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
-						Console.WriteLine(labels[command[1]]);
+						try {
+							contexti = labels[command[1]];
+						} catch {
+							throw new Exception("Invalid Token; label doesn't exist");
+						}
 						break;
 
 					case "try":

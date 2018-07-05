@@ -131,6 +131,36 @@ namespace FlexScript {
 								}
 								break;
 
+							case "write":
+								// Create lex state
+								int lexStateFile = 0;
+
+								// Create lex outputs
+								List<string> contentSplit = new List<string>();
+								string[] contentLines;
+								string contentRaw = "";
+								List<string> resultArray = new List<string>();
+								string resultFile = "";
+
+								foreach (string token in command.Skip(2)) {
+									if (lexStateFile == 0) {
+										if (token == "to") {
+											lexStateFile++;
+										} else {
+											contentSplit.Add(token);
+										}
+									} else if (lexStateFile == 1) {
+										resultArray.Add(token);
+									}
+								}
+
+								resultFile = string.Join(" ", resultArray);
+								contentRaw = string.Join(" ", contentSplit);
+								contentLines = contentRaw.Split(',');
+
+								File.WriteAllLines(resultFile, contentLines);
+								break;
+
 							default:
 								throw new Exception("Invalid Token; unsupported file operation '" + command[1] + "' used in 'file'");
 						}

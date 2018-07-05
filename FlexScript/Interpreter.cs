@@ -56,6 +56,9 @@ namespace FlexScript {
 			List<string> command = line.Split(' ').ToList();
 			int commandLength = command.ToArray().Length;
 
+			// Format indentation
+			command[0] = command[0].Replace("\t", "");
+
 			// Format command variables
 			if (!(new string[] { "try", "for" }.Contains(command[0])))
 				FormatCommandVariables(command, commandLength);

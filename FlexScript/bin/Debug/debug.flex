@@ -1,2 +1,2 @@
-file write my name,is jeff,lol is that funny,,no :( to test.txt
+file append HA HA JUST kid,your mom is double,,,,gay to test.txt
 pause -s

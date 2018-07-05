@@ -131,34 +131,64 @@ namespace FlexScript {
 								}
 								break;
 
-							case "write":
+							case "append":
 								// Create lex state
-								int lexStateFile = 0;
+								int lexStateAppend = 0;
 
 								// Create lex outputs
-								List<string> contentSplit = new List<string>();
-								string[] contentLines;
-								string contentRaw = "";
-								List<string> resultArray = new List<string>();
-								string resultFile = "";
+								List<string> contentSplitAppend = new List<string>();
+								string[] contentLinesAppend;
+								string contentRawAppend = "";
+								List<string> resultArrayAppend = new List<string>();
+								string resultFileAppend = "";
 
 								foreach (string token in command.Skip(2)) {
-									if (lexStateFile == 0) {
+									if (lexStateAppend == 0) {
 										if (token == "to") {
-											lexStateFile++;
+											lexStateAppend++;
 										} else {
-											contentSplit.Add(token);
+											contentSplitAppend.Add(token);
 										}
-									} else if (lexStateFile == 1) {
-										resultArray.Add(token);
+									} else if (lexStateAppend == 1) {
+										resultArrayAppend.Add(token);
 									}
 								}
 
-								resultFile = string.Join(" ", resultArray);
-								contentRaw = string.Join(" ", contentSplit);
-								contentLines = contentRaw.Split(',');
+								resultFileAppend = string.Join(" ", resultArrayAppend);
+								contentRawAppend = string.Join(" ", contentSplitAppend);
+								contentLinesAppend = contentRawAppend.Split(',');
 
-								File.WriteAllLines(resultFile, contentLines);
+								File.AppendAllLines(resultFileAppend, contentLinesAppend);
+								break;
+
+							case "write":
+								// Create lex state
+								int lexStateWrite = 0;
+
+								// Create lex outputs
+								List<string> contentSplitWrite = new List<string>();
+								string[] contentLinesWrite;
+								string contentRawWrite = "";
+								List<string> resultArrayWrite = new List<string>();
+								string resultFileWrite = "";
+
+								foreach (string token in command.Skip(2)) {
+									if (lexStateWrite == 0) {
+										if (token == "to") {
+											lexStateWrite++;
+										} else {
+											contentSplitWrite.Add(token);
+										}
+									} else if (lexStateWrite == 1) {
+										resultArrayWrite.Add(token);
+									}
+								}
+
+								resultFileWrite = string.Join(" ", resultArrayWrite);
+								contentRawWrite = string.Join(" ", contentSplitWrite);
+								contentLinesWrite = contentRawWrite.Split(',');
+
+								File.WriteAllLines(resultFileWrite, contentLinesWrite);
 								break;
 
 							default:

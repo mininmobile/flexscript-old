@@ -1,3 +1,3 @@
 file get debug.txt
-for line in {file.lines} then print {line}
+print {file.length}
 pause -s

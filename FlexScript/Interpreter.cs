@@ -123,6 +123,12 @@ namespace FlexScript {
 								variables["file"] = "[ file:buffer ]";
 								// Create lines variable
 								variables["file.lines"] = string.Join(",", lines);
+								// Create length variable
+								variables["file.length"] = lines.Length.ToString();
+								// Create item variables
+								for (int i = 0; i < lines.Length; i++) {
+									variables["file.lines[" + i + "]"] = lines[i];
+								}
 								break;
 
 							default:

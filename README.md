@@ -17,6 +17,9 @@ To define and interact with variables, the command is `var`, you do not need to 
 ### Loops
 There are 2 types of loops, `for` and `while`, `for` is like a swiss army knife and `while` is generic. (while is not implemented)
 
+### Labels
+You can define a label on a newline with `:labelname` where `labelname` is the name of your label, then you can jump to it using the `goto` command, see the `Multiline For` under `Examples`.
+
 ### Types
 In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string, see `Math` under `Examples`.
 
@@ -83,6 +86,17 @@ if {x} == {y} then print match! // Output is 'match!'
 if {x} != {y} then print !match // Outputs nothing
 if {x} > {y} then print bigger than // Outputs nothing
 if {x} >= {y} then print bigger than or equal to // Oututs 'bigger than or equal to'
+```
+
+### 'While Loop'
+```bash
+var i = 0 // create index
+:loop
+var i += 1 // increment index
+
+print {i} // print index
+
+if {i} < 5 then goto loop // while index is less than 5, loop
 ```
 
 ### For/times Loop

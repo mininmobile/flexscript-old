@@ -1,2 +1,2 @@
-file copy debug.txt to test.txt
+file rename test.txt to debug2.txt
 pause -s

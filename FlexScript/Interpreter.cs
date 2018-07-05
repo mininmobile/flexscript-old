@@ -133,7 +133,7 @@ namespace FlexScript {
 
 							case "copy":
 								// Get string locations
-								string[] location = string.Join(" ", command.Skip(2)).Split(new string[] { "to" }, StringSplitOptions.RemoveEmptyEntries);
+								string[] location = string.Join(" ", command.Skip(2)).Split(new string[] { " to " }, StringSplitOptions.RemoveEmptyEntries);
 
 								// Copy file
 								File.Copy(location[0], location[1]);

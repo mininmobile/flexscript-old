@@ -1,2 +1,3 @@
-try print {i} catch print AN ERROR HAS HAPPENED: {e}
+file get debug.txt
+for line in {file.lines} then print {line}
 pause -s

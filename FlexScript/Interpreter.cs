@@ -57,9 +57,7 @@ namespace FlexScript {
 			int commandLength = command.ToArray().Length;
 
 			// Format command variables
-			if (command[0] == "for")
-				FormatCommandVariables(command, commandLength, true);
-			else if (command[0] != "try")
+			if (!(new string[] { "try", "for" }.Contains(command[0])))
 				FormatCommandVariables(command, commandLength);
 
 			#region Command parser
@@ -114,6 +112,25 @@ namespace FlexScript {
 						}
 						break;
 
+					case "file":
+						if (commandLength < 3) throw new Exception("Invalid Token; command expected argument");
+
+						switch (command[1]) {
+							case "get":
+								// Get file content
+								string[] lines = File.ReadLines(string.Join(" ", command.Skip(2))).ToArray();
+								// Create file variable
+								variables["file"] = "[ file:buffer ]";
+								// Create lines variable
+								variables["file.lines"] = string.Join(",", lines);
+								break;
+
+							default:
+								throw new Exception("Invalid Token; unsupported file operation '" + command[1] + "' used in 'file'");
+						}
+						break;
+
+					#region try
 					case "try":
 						// Create method to get state of lexxing
 						int lexStateTry = 0;
@@ -148,6 +165,7 @@ namespace FlexScript {
 							variables.Remove("e");
 						}
 						break;
+					#endregion
 
 					#region for
 					case "for":
@@ -157,10 +175,13 @@ namespace FlexScript {
 						int lexStateFor = 0;
 
 						// Create lexxing outputs
-						string iterator = "";
+						string iterator = command[1];
 						string type = "";
 						List<string> array = new List<string>();
 						string forResult = "";
+
+						// Format Variables on Loop
+						FormatCommandVariables(command, commandLength, iterator);
 
 						// For each token in statement
 						foreach (string token in command.Skip(1)) {
@@ -168,8 +189,6 @@ namespace FlexScript {
 								if (new string[] { "times", "in" }.Contains(token)) { // If done, go to next half
 									type = token;
 									lexStateFor++;
-								} else { // If not done, set iterator
-									iterator += token;
 								}
 							} else if (lexStateFor == 1) { // While lexxing second half of statement
 								if (token == "then") { // If done, go to result
@@ -442,7 +461,7 @@ namespace FlexScript {
 		#endregion
 
 		#region Helper Functions
-		public void FormatCommandVariables(List<string> command, int commandLength, bool ignore = false) {
+		public void FormatCommandVariables(List<string> command, int commandLength, string ignore = "") {
 			try {
 				// Formats variables into variable contents
 				for (int i = 0; i < commandLength; i++) {
@@ -453,7 +472,7 @@ namespace FlexScript {
 					int close = token.IndexOf("}");
 					// If token matches variables criterea
 					if (token.StartsWith("{") && close != -1) {
-						if (!(token.Substring(1, close - 1) == "i" && ignore)) {
+						if (token.Substring(1, close - 1) != ignore) {
 							// Replace variable placeholder with variable's contents
 							command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
 						}

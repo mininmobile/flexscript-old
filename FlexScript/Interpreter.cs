@@ -155,6 +155,13 @@ namespace FlexScript {
 								}
 								break;
 
+							case "exists":
+								// Create file variable
+								variables["file"] = "[ file:buffer ]";
+								// Create existance variable
+								variables["file.exists"] = File.Exists(string.Join(" ", command.Skip(2))).ToString().ToLower();
+								break;
+
 							case "copy":
 								// Get string locations
 								string[] location = string.Join(" ", command.Skip(2)).Split(new string[] { " to " }, StringSplitOptions.RemoveEmptyEntries);

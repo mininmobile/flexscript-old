@@ -118,3 +118,9 @@ if {i} < 5 then goto loop // while index is less than 5, loop
 ```bash
 for i times 10 do print {i} // Outputs numbers '1' through '10'
 ```
+
+### For/in Loop
+```bash
+var array = apple,banana,orange,strawberry
+for item in {array} then print {item} // prints current item from array
+```

@@ -21,7 +21,7 @@ There are 2 types of loops, `for` and `while`, `for` is like a swiss army knife 
 You can define a label on a newline with `:labelname` where `labelname` is the name of your label, then you can jump to it using the `goto` command, see `'While' Loop` under `Examples`.
 
 ### Types
-In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string, see `Math` under `Examples`.
+In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string, see `Math` and `Arrays` under `Examples`.
 
 ## Examples
 ### Hello World
@@ -77,6 +77,14 @@ var d = {c} // d is '512', value of c
 var d /= 8 // d is '64'
 ```
 
+### Arrays
+```bash
+var lines = hello,world,foo,bar
+
+print {lines} // outputs 'hello,world,foo,bar'
+print {lines[0]} // outputs 'hello'
+```
+
 ### If Statements
 ```bash
 var x = 5
@@ -85,7 +93,7 @@ var y = 5
 if {x} == {y} then print match! // Output is 'match!'
 if {x} != {y} then print !match // Outputs nothing
 if {x} > {y} then print bigger than // Outputs nothing
-if {x} >= {y} then print bigger than or equal to // Oututs 'bigger than or equal to'
+if {x} >= {y} then print bigger than or equal to // Outputs 'bigger than or equal to'
 ```
 
 ### Try Catch

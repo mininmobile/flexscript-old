@@ -1,2 +1,2 @@
-file append HA HA JUST kid,your mom is double,,,,gay to test.txt
+file write nothing is here... 4o4 to test.txt
 pause -s

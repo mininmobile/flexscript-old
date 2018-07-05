@@ -105,29 +105,6 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
-					case "throw":
-						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
-
-						// Get error message
-						string message = string.Join(" ", command.Skip(2));
-
-						// Get error type
-						string error = "Error; ";
-						switch (command[1]) {
-							case "error": error = "Error; "; break;
-							case "invalidtokenerror": error = "Invalid Token; "; break;
-							case "invalidstatementerror": error = "Invalid Statement; "; break;
-
-							default: throw new Exception("Invalid Token; unsupported error used in 'throw'");
-						}
-
-						// Throw error
-						if (message.Length == 0)
-							throw new Exception(error + "undefined");
-						else
-							throw new Exception(error + message);
-						break;
-
 					case "goto":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
@@ -136,6 +113,37 @@ namespace FlexScript {
 						} catch {
 							throw new Exception("Invalid Token; label doesn't exist");
 						}
+						break;
+
+					case "throw":
+						if (commandLength < 2)
+							throw new Exception("Invalid Token; command expected argument");
+
+						// Get error message
+						string message = string.Join(" ", command.Skip(2));
+
+						// Get error type
+						string error = "Error; ";
+						switch (command[1]) {
+							case "error":
+								error = "Error; ";
+								break;
+							case "invalidtokenerror":
+								error = "Invalid Token; ";
+								break;
+							case "invalidstatementerror":
+								error = "Invalid Statement; ";
+								break;
+
+							default:
+								throw new Exception("Invalid Token; unsupported error used in 'throw'");
+						}
+
+						// Throw error
+						if (message.Length == 0)
+							throw new Exception(error + "undefined");
+						else
+							throw new Exception(error + message);
 						break;
 
 					#region file
@@ -160,7 +168,7 @@ namespace FlexScript {
 
 							case "exists":
 								// Create file variable
-								variables["file"] = "[ file:buffer ]";
+								variables["file"] = "[ io:stream ]";
 								// Create existance variable
 								variables["file.exists"] = File.Exists(string.Join(" ", command.Skip(2))).ToString().ToLower();
 								break;

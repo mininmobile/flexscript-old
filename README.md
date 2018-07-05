@@ -137,6 +137,13 @@ for item in {array} then print {item} // prints current item from array
 
 file get myfile.txt
 
+// check if file exists, creates 
+// 
+// file        : placeholder file variable
+// file.exists : true or false, does referenced file exist
+
+file exists file.txt
+
 // override a file with a line or lines, foo.txt after this command:
 // 
 // hello

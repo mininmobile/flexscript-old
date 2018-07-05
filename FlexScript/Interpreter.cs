@@ -93,6 +93,33 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
+					case "try":
+						// Create method to get state of lexxing
+						int lexStateTry = 0;
+
+						// Create lexxing outputs
+						List<string> tryArray = new List<string>();
+						string tryResult = "";
+						List<string> catchArray = new List<string>();
+						string catchResult = "";
+
+						// For each token in statement
+						foreach (string token in command.Skip(1)) {
+							if (lexStateTry == 0) { // While lexxing first half
+								if (token == "catch") {
+									lexStateTry++;
+								} else {
+									tryArray.Add(token);
+								}
+							} else if (lexStateTry == 1) {
+								catchArray.Add(token);
+							}
+						}
+
+						tryResult = string.Join(" ", tryResult);
+						catchResult = string.Join(" ", catchResult);
+						break;
+
 					#region for
 					case "for":
 						if (commandLength < 6) throw new Exception("Invalid Statement; not enough arguments for 'for'");

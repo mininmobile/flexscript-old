@@ -27,7 +27,7 @@ namespace FlexScript {
 
 					// Parse user input
 					try {
-						interpreter.ParseLine(input, 0, new List<string>());
+						interpreter.ParseLine(input, new List<string>());
 					} catch (Exception e) {
 						// Output error
 						Console.ForegroundColor = ConsoleColor.Red;

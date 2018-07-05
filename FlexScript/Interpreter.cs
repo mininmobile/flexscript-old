@@ -8,24 +8,39 @@ using System.Threading.Tasks;
 namespace FlexScript {
 	class Interpreter {
 		Dictionary<string, string> variables = new Dictionary<string, string>();
+		Dictionary<string, int> labels = new Dictionary<string, int>();
+		int contexti = 0;
 
 		#region Parser Functions
 		public void ParseFile(string filePath) {
-
 			// Read all input lines from file
 			IEnumerable<string> lines = File.ReadLines(filePath);
+			int llines = lines.ToArray().Length;
 
-			// Parse each input line in file
-			for (int i = 0; i < lines.ToArray().Length; i++) {
+			// Get all labels
+			// Prepare lines
+			for (int i = 0; i < llines; i++) {
 				// Get Line
 				string line = lines.ToArray()[i];
+				string[] command = line.Split(' ');
+
+				// If line is a label
+				if (line.StartsWith(":")) {
+					labels[command[0].Substring(1, line.Length - 1)] = i;
+				}
+			}
+
+			// Parse each input line in file
+			for (contexti = 0; contexti < llines; contexti++) {
+				// Get Line
+				string line = lines.ToArray()[contexti];
 
 				try {
-					ParseLine(line, i, lines);
+					ParseLine(line, lines);
 				} catch (Exception e) {
 					// Output error
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.WriteLine("\t" + (i + 1) + " | " + line);
+					Console.WriteLine("\t" + (contexti + 1) + " | " + line);
 					Console.WriteLine("\n\t" + e.Message);
 					Console.ForegroundColor = ConsoleColor.Gray;
 					// Pause
@@ -36,11 +51,7 @@ namespace FlexScript {
 			}
 		}
 
-		public void ParseLine(string line, int contexti, IEnumerable<string> context) {
-			// Removes comments from input line
-			if (line.IndexOf("//") != -1)
-				line = line.Substring(0, line.IndexOf("//"));
-
+		public void ParseLine(string line, IEnumerable<string> context) {
 			// Formats input into tokens
 			List<string> command = line.Split(' ').ToList();
 			int commandLength = command.ToArray().Length;
@@ -94,7 +105,9 @@ namespace FlexScript {
 						break;
 
 					case "goto":
-						// code
+						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
+
+						Console.WriteLine(labels[command[1]]);
 						break;
 
 					case "try":
@@ -124,10 +137,10 @@ namespace FlexScript {
 						catchResult = string.Join(" ", catchArray);
 
 						try {
-							ParseLine(tryResult, contexti, context);
+							ParseLine(tryResult, context);
 						} catch (Exception e) {
 							variables["e"] = e.Message;
-							ParseLine(catchResult, contexti, context);
+							ParseLine(catchResult, context);
 							variables.Remove("e");
 						}
 						break;
@@ -183,7 +196,7 @@ namespace FlexScript {
 									FormatCommandVariables(resultCommand, resultCommand.ToArray().Length);
 
 									// Convert list to string and parse
-									ParseLine(string.Join(" ", resultCommand), contexti, context);
+									ParseLine(string.Join(" ", resultCommand), context);
 								}
 
 								// Remove iterator from variables
@@ -206,7 +219,7 @@ namespace FlexScript {
 									FormatCommandVariables(resultCommand, resultCommand.ToArray().Length);
 
 									// Convert list to string and parse
-									ParseLine(string.Join(" ", resultCommand), contexti, context);
+									ParseLine(string.Join(" ", resultCommand), context);
 								}
 
 								// Remove iterator from variables
@@ -256,12 +269,12 @@ namespace FlexScript {
 						switch (comparator) {
 							case "==":
 								// Are original and compare are equal
-								if (original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context);
+								if (original.SequenceEqual(compare)) ParseLine(ifResult, context);
 								break;
 
 							case "!=":
 								// Are original and compare not equal
-								if (!original.SequenceEqual(compare)) ParseLine(ifResult, contexti, context);
+								if (!original.SequenceEqual(compare)) ParseLine(ifResult, context);
 								break;
 
 							case "<":
@@ -269,7 +282,7 @@ namespace FlexScript {
 								int lessX = int.Parse(string.Join("", original));
 								int lessY = int.Parse(string.Join("", compare));
 								// Is original or compare lesser
-								if (lessX < lessY) ParseLine(ifResult, contexti, context);
+								if (lessX < lessY) ParseLine(ifResult, context);
 								break;
 
 							case ">":
@@ -277,7 +290,7 @@ namespace FlexScript {
 								int greatX = int.Parse(string.Join("", original));
 								int greatY = int.Parse(string.Join("", compare));
 								// Is original or compare greater
-								if (greatX > greatY) ParseLine(ifResult, contexti, context);
+								if (greatX > greatY) ParseLine(ifResult, context);
 								break;
 
 							case "<=":
@@ -285,7 +298,7 @@ namespace FlexScript {
 								int lessEqualX = int.Parse(string.Join("", original));
 								int lessEqualY = int.Parse(string.Join("", compare));
 								// Is original or compare lesser/equal
-								if (lessEqualX <= lessEqualY) ParseLine(ifResult, contexti, context);
+								if (lessEqualX <= lessEqualY) ParseLine(ifResult, context);
 								break;
 
 							case ">=":
@@ -293,7 +306,7 @@ namespace FlexScript {
 								int greatEqualX = int.Parse(string.Join("", original));
 								int greatEqualY = int.Parse(string.Join("", compare));
 								// Is original or compare greater/equal
-								if (greatEqualX >= greatEqualY) ParseLine(ifResult, contexti, context);
+								if (greatEqualX >= greatEqualY) ParseLine(ifResult, context);
 								break;
 
 							default:

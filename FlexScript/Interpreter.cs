@@ -131,6 +131,11 @@ namespace FlexScript {
 								}
 								break;
 
+							case "delete":
+								// Remove specified file
+								File.Delete(string.Join(" ", command.Skip(2)));
+								break;
+
 							case "append":
 								// Create lex state
 								int lexStateAppend = 0;

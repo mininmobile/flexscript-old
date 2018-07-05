@@ -1,2 +1,2 @@
-file write nothing is here... 4o4 to test.txt
+file delete test.txt
 pause -s

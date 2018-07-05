@@ -1,9 +1,2 @@
-var i = 0
-:loop
-var i += 1
-
-print {i}
-
-if {i} < 5 then goto loop
-
+try print {i} catch print AN ERROR HAS HAPPENED: {e}
 pause -s

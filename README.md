@@ -79,7 +79,7 @@ var d /= 8 // d is '64'
 
 ### Arrays
 ```bash
-var lines = hello,world,foo,bar
+var lines =[] hello,world,foo,bar
 
 print {lines} // outputs 'hello,world,foo,bar'
 print {lines[0]} // outputs 'hello'
@@ -121,7 +121,8 @@ for i times 10 do print {i} // Outputs numbers '1' through '10'
 
 ### For/in Loop
 ```bash
-var array = apple,banana,orange,strawberry
+var array = apple,banana,orange,strawberry // =[] is redundant for this use case as were not referencing specific items via. array[x]
+
 for item in {array} then print {item} // prints current item from array
 ```
 

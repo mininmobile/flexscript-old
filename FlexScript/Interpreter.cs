@@ -105,6 +105,16 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
+					case "call":
+						if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
+
+						Interpreter call = new Interpreter(variables);
+
+						call.ParseFile(string.Join(" ", command.Skip(1)));
+
+						variables = call.variables;
+						break;
+
 					case "goto":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 

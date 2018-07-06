@@ -116,7 +116,11 @@ namespace FlexScript {
 
 						Interpreter call = new Interpreter(variables);
 
-						call.ParseFile(string.Join(" ", command.Skip(1)));
+						string path = string.Join(" ", command.Skip(1));
+
+						if (!path.EndsWith(".flex")) path += ".flex";
+
+						call.ParseFile(path);
 
 						variables = call.variables;
 						break;

@@ -180,6 +180,7 @@ namespace FlexScript {
 						string getPath = string.Join(" ", command.Skip(1));
 
 						Directory.SetCurrentDirectory(getPath);
+						variables["env.cd"] = Environment.CurrentDirectory;
 						break;
 
 					#region file
@@ -213,6 +214,10 @@ namespace FlexScript {
 									variables["dir"] = "[ dir:buffer ]";
 									// Create array
 									variables["dir.files"] = string.Join(",", files);
+									// Create array indexes
+									for (int i = 0; i < files.Length; i++) {
+										variables["dir.files[" + i + "]"] = files[i];
+									}
 								} else {
 									// Get files
 									string[] files = Directory.GetFiles(getDir);
@@ -220,6 +225,10 @@ namespace FlexScript {
 									variables["dir"] = "[ dir:buffer ]";
 									// Create array
 									variables["dir.files"] = string.Join(",", files);
+									// Create array indexes
+									for (int i = 0; i < files.Length; i++) {
+										variables["dir.files[" + i + "]"] = files[i];
+									}
 								}
 								break;
 

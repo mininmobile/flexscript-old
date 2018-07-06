@@ -174,6 +174,14 @@ namespace FlexScript {
 							throw new Exception(error + message);
 						break;
 
+					case "cd":
+						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
+
+						string getPath = string.Join(" ", command.Skip(1));
+
+						Directory.SetCurrentDirectory(getPath);
+						break;
+
 					#region file
 					case "file":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
@@ -198,8 +206,6 @@ namespace FlexScript {
 								// Get directory name
 								string getDir = string.Join(" ", command.Skip(2));
 
-								Console.WriteLine("'{0}'", getDir);
-
 								if (getDir == "") {
 									// Get files
 									string[] files = Directory.GetFiles(variables["env.cd"]);
@@ -208,6 +214,12 @@ namespace FlexScript {
 									// Create array
 									variables["dir.files"] = string.Join(",", files);
 								} else {
+									// Get files
+									string[] files = Directory.GetFiles(getDir);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", files);
 								}
 								break;
 

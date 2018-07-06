@@ -11,6 +11,12 @@ namespace FlexScript {
 		Dictionary<string, int> labels = new Dictionary<string, int>();
 		int contexti = 0;
 
+		public Interpreter() { }
+
+		public Interpreter(Dictionary<string, string> vars) {
+			variables = vars;
+		}
+
 		#region Parser Functions
 		public void ParseFile(string filePath) {
 			// Read all input lines from file

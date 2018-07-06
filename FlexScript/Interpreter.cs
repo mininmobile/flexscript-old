@@ -114,14 +114,17 @@ namespace FlexScript {
 					case "call":
 						if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
+						// Create new interpreter
 						Interpreter call = new Interpreter(variables);
 
+						// Get import path
 						string path = string.Join(" ", command.Skip(1));
-
 						if (!path.EndsWith(".flex")) path += ".flex";
 
+						// Run file
 						call.ParseFile(path);
 
+						// Get variables from called file
 						variables = call.variables;
 						break;
 

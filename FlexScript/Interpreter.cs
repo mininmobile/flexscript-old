@@ -11,7 +11,12 @@ namespace FlexScript {
 		Dictionary<string, int> labels = new Dictionary<string, int>();
 		int contexti = 0;
 
-		public Interpreter() { }
+		public Interpreter() {
+			// Create base enviroment variable
+			variables["env"] = "[ object:enviroment ]";
+			// Get current directory
+			variables["env.cd"] = Environment.CurrentDirectory;
+		}
 
 		public Interpreter(Dictionary<string, string> vars) {
 			variables = vars;
@@ -111,7 +116,7 @@ namespace FlexScript {
 						Console.ForegroundColor = GetColors()[command[1]];
 						break;
 
-					case "call":
+					case "using":
 						if (commandLength == 1) throw new Exception("Invalid Token; command expected argument");
 
 						// Create new interpreter

@@ -1,3 +1,2 @@
-call test.flex
-print imported from test.flex: {myvar}
+print {env.cd}
 pause -s

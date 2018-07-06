@@ -176,7 +176,7 @@ namespace FlexScript {
 
 					#region file
 					case "file":
-						if (commandLength < 3) throw new Exception("Invalid Token; command expected argument");
+						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
 						switch (command[1]) {
 							case "get":
@@ -194,9 +194,26 @@ namespace FlexScript {
 								}
 								break;
 
+							case "dir":
+								// Get directory name
+								string getDir = string.Join(" ", command.Skip(2));
+
+								Console.WriteLine("'{0}'", getDir);
+
+								if (getDir == "") {
+									// Get files
+									string[] files = Directory.GetFiles(variables["env.cd"]);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", files);
+								} else {
+								}
+								break;
+
 							case "exists":
 								// Create file variable
-								variables["file"] = "[ io:stream ]";
+								variables["file"] = "[ file:iostream ]";
 								// Create existance variable
 								variables["file.exists"] = File.Exists(string.Join(" ", command.Skip(2))).ToString().ToLower();
 								break;

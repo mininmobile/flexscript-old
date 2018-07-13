@@ -29,6 +29,8 @@ namespace FlexScript {
 					try {
 						interpreter.ParseLine(input, new List<string>());
 					} catch (Exception e) {
+						if (e.Message == "EC0") running = false;
+
 						// Output error
 						Console.ForegroundColor = ConsoleColor.Red;
 						Console.WriteLine("\t$ | " + input);

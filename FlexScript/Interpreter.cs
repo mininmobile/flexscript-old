@@ -49,6 +49,8 @@ namespace FlexScript {
 				try {
 					ParseLine(line, lines);
 				} catch (Exception e) {
+					if (e.Message == "EC0") break;
+
 					// Output error
 					Console.ForegroundColor = ConsoleColor.Red;
 					Console.WriteLine("\t" + (contexti + 1) + " | " + line);
@@ -116,6 +118,10 @@ namespace FlexScript {
 
 						// Change console foregrund color
 						Console.ForegroundColor = GetColors()[command[1]];
+						break;
+
+					case "exit":
+						throw new Exception("EC0");
 						break;
 
 					case "using":

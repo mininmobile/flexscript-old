@@ -191,6 +191,76 @@ namespace FlexScript {
 						variables["env.cd"] = Environment.CurrentDirectory;
 						break;
 
+					#region directory
+					case "directory":
+						if (commandLength < 2)
+							throw new Exception("Invalid Token; command expected argument");
+
+						switch (command[1]) {
+							case "get":
+								// Get directory name
+								string getDir = string.Join(" ", command.Skip(2));
+
+								if (getDir == "") {
+									// Get files
+									string[] dirs = Directory.GetDirectories(variables["env.cd"]);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", dirs);
+									// Create array indexes
+									for (int i = 0; i < dirs.Length; i++) {
+										variables["dir.files[" + i + "]"] = dirs[i];
+									}
+								} else {
+									// Get files
+									string[] dirs = Directory.GetDirectories(getDir);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", dirs);
+									// Create array indexes
+									for (int i = 0; i < dirs.Length; i++) {
+										variables["dir.files[" + i + "]"] = dirs[i];
+									}
+								}
+								break;
+
+							case "getf":
+								// Get directory name
+								string getFiles = string.Join(" ", command.Skip(2));
+
+								if (getFiles == "") {
+									// Get files
+									string[] files = Directory.GetFiles(variables["env.cd"]);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", files);
+									// Create array indexes
+									for (int i = 0; i < files.Length; i++) {
+										variables["dir.files[" + i + "]"] = files[i];
+									}
+								} else {
+									// Get files
+									string[] files = Directory.GetFiles(getFiles);
+									// Create dir variable
+									variables["dir"] = "[ dir:buffer ]";
+									// Create array
+									variables["dir.files"] = string.Join(",", files);
+									// Create array indexes
+									for (int i = 0; i < files.Length; i++) {
+										variables["dir.files[" + i + "]"] = files[i];
+									}
+								}
+								break;
+
+							default:
+								throw new Exception("Invalid Token; unsupported folder operation '" + command[1] + "' used in 'directory'");
+						}
+						break;
+					#endregion
+
 					#region file
 					case "file":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
@@ -208,35 +278,6 @@ namespace FlexScript {
 								// Create item variables
 								for (int i = 0; i < lines.Length; i++) {
 									variables["file.lines[" + i + "]"] = lines[i];
-								}
-								break;
-
-							case "dir":
-								// Get directory name
-								string getDir = string.Join(" ", command.Skip(2));
-
-								if (getDir == "") {
-									// Get files
-									string[] files = Directory.GetFiles(variables["env.cd"]);
-									// Create dir variable
-									variables["dir"] = "[ dir:buffer ]";
-									// Create array
-									variables["dir.files"] = string.Join(",", files);
-									// Create array indexes
-									for (int i = 0; i < files.Length; i++) {
-										variables["dir.files[" + i + "]"] = files[i];
-									}
-								} else {
-									// Get files
-									string[] files = Directory.GetFiles(getDir);
-									// Create dir variable
-									variables["dir"] = "[ dir:buffer ]";
-									// Create array
-									variables["dir.files"] = string.Join(",", files);
-									// Create array indexes
-									for (int i = 0; i < files.Length; i++) {
-										variables["dir.files[" + i + "]"] = files[i];
-									}
 								}
 								break;
 

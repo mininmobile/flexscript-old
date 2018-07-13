@@ -74,6 +74,8 @@ namespace FlexScript {
 			if (!(new string[] { "try", "for" }.Contains(command[0])))
 				FormatCommandVariables(command, commandLength);
 
+			command = string.Join(" ", command).Split(' ').ToList();
+
 			#region Command parser
 			if (command[0] != "" && !command[0].StartsWith(":")) switch (command[0]) {
 					case "print":
@@ -544,6 +546,28 @@ namespace FlexScript {
 								// Create item variables
 								for (int i = 0; i < variables[command[1]].Split(',').Length; i++) {
 									variables[command[1] + "[" + i + "]"] = variables[command[1]].Split(',')[i];
+								}
+								break;
+
+							case "=:":
+								// Get type
+								switch (command[4]) {
+									case "class":
+										// Get raw class data
+										string _class = string.Join(" ", command.Skip(5));
+
+										// Set class variable
+										variables[command[1]] = "[ internal:[ class:" + string.Join(" ", _class) + " ] ]";
+										// Set property variables
+										foreach (string link in _class.Split(',')) {
+											string[] keyval = link.Split(':');
+
+											variables[command[1] + "." + keyval[0]] = keyval[1];
+										}
+										break;
+
+									default:
+										throw new Exception("Invalid Token; unsupported object type token '" + command[4] + "', did you mean to use class?");
 								}
 								break;
 

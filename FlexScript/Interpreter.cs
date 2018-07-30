@@ -734,28 +734,15 @@ namespace FlexScript {
 
 		#region Helper Functions
 		public void FormatCommandVariables(List<string> command, int commandLength, string ignore = "") {
-			try {
-				// Formats variables into variable contents
-				for (int i = 0; i < commandLength; i++) {
-					// Get token
-					string token = command[i];
+			for (int i = 0; i < commandLength; i++) {
+				string token = command[i];
 
-					// Get Closing Bracket
-					int begin = token.IndexOf("{") + 1;
-					int close = token.IndexOf("}");
-					// If token matches variables criterea
-					if (begin != 0 && close != -1) {
-						if (token.Substring(1, close - 1) != ignore) {
-							// Replace variable placeholder with variable's contents
-							Console.WriteLine(token.Substring(close + 1, token.Length - close - 1));
-							command[i] = variables[token.Substring(begin, close - begin)] + token.Substring(close + 1, token.Length - close - 1);
-						}
-					}
+				foreach (string variable in variables.Keys) {
+					if (token.Contains("{" + variable + "}"))
+						token = token.Replace("{" + variable + "}", variables[variable]);
 				}
-			} catch (Exception e) {
-				if (e.Message == "The given key was not present in the dictionary.") throw new Exception("Invalid Token; variable doesn't exist");
 
-				throw e;
+				command[i] = token;
 			}
 		}
 

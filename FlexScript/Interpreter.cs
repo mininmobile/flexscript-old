@@ -151,8 +151,10 @@ namespace FlexScript {
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
 						try {
+							// If label exists, goto it
 							contexti = labels[command[1]];
 						} catch {
+							// If label doesn't exist, throw up
 							throw new Exception("Invalid Token; label doesn't exist");
 						}
 						break;
@@ -201,6 +203,7 @@ namespace FlexScript {
 						break;
 
 					case "dumpvars":
+						// print each variable and it's value
 						foreach (string variable in variables.Keys) {
 							Console.WriteLine(variable + " == " + variables[variable]);
 						}
@@ -349,10 +352,13 @@ namespace FlexScript {
 									}
 								}
 
+								// Format file path
 								resultFileAppend = string.Join(" ", resultArrayAppend);
+								// Format Content
 								contentRawAppend = string.Join(" ", contentSplitAppend);
 								contentLinesAppend = contentRawAppend.Split(',');
 
+								// Append content to file
 								File.AppendAllLines(resultFileAppend, contentLinesAppend);
 								break;
 
@@ -379,10 +385,13 @@ namespace FlexScript {
 									}
 								}
 
+								// Format file path
 								resultFileWrite = string.Join(" ", resultArrayWrite);
+								// Format Content
 								contentRawWrite = string.Join(" ", contentSplitWrite);
 								contentLinesWrite = contentRawWrite.Split(',');
 
+								// Write content to file
 								File.WriteAllLines(resultFileWrite, contentLinesWrite);
 								break;
 
@@ -416,12 +425,15 @@ namespace FlexScript {
 							}
 						}
 
+						// Format results
 						tryResult = string.Join(" ", tryArray);
 						catchResult = string.Join(" ", catchArray);
 
 						try {
+							// Try to run tryResult
 							ParseLine(tryResult, context);
 						} catch (Exception e) {
+							// If tryResult returns an error, run catchResult
 							variables["e"] = e.Message;
 							ParseLine(catchResult, context);
 							variables.Remove("e");
@@ -747,18 +759,22 @@ namespace FlexScript {
 		#region Helper Functions
 		public void FormatCommandVariables(List<string> command, int commandLength, string ignore = "") {
 			for (int i = 0; i < commandLength; i++) {
+				// Get token from command
 				string token = command[i];
 
+				// If token contains variable, replace with value
 				foreach (string variable in variables.Keys) {
 					if (token.Contains("{" + variable + "}"))
 						token = token.Replace("{" + variable + "}", variables[variable]);
 				}
 
+				// Set command token to replaced token
 				command[i] = token;
 			}
 		}
 
 		public List<string> GetComprarators() {
+			// Return list of supported comparators in if statement
 			return new List<string>() {
 				"==",
 				"!=",

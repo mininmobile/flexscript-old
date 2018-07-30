@@ -65,6 +65,12 @@ namespace FlexScript {
 		}
 
 		public void ParseLine(string line, IEnumerable<string> context) {
+			// Remove comments
+			if (line.Contains("//"))
+				line = line.Substring(0, line.IndexOf("//"));
+			if (line.Contains("#"))
+				line = line.Substring(0, line.IndexOf("#"));
+
 			// Formats input into tokens
 			List<string> command = line.Split(' ').ToList();
 			int commandLength = command.ToArray().Length;

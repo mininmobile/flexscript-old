@@ -136,6 +136,17 @@ var myinstance =: new {myclass}
 print {myinstance.foo} # prints 'bar'
 ```
 
+### Directories
+```bash
+# create a new directory
+
+directory new my folder
+
+# delete a directory
+
+directory delete my folder
+```
+
 ### Files
 ```bash
 # get contents of a file, seperate lines are split by commas, this creates a few variables:

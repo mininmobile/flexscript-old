@@ -1,3 +1,3 @@
-directory get
-for i in {dir.files} then print {i}
+directory delete poot
+
 pause -s

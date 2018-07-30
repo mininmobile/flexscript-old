@@ -185,9 +185,12 @@ namespace FlexScript {
 					case "cd":
 						if (commandLength < 2) throw new Exception("Invalid Token; command expected argument");
 
+						// Get path
 						string getPath = string.Join(" ", command.Skip(1));
 
+						// Change directory
 						Directory.SetCurrentDirectory(getPath);
+						// Change variables
 						variables["env.cd"] = Environment.CurrentDirectory;
 						break;
 
@@ -253,6 +256,16 @@ namespace FlexScript {
 										variables["dir.files[" + i + "]"] = files[i];
 									}
 								}
+								break;
+
+							case "new":
+								// Create new folder
+								Directory.CreateDirectory(string.Join(" ", command.Skip(2)));
+								break;
+
+							case "delete":
+								// Remove specified folder
+								Directory.Delete(string.Join(" ", command.Skip(2)));
 								break;
 
 							default:
@@ -728,12 +741,14 @@ namespace FlexScript {
 					string token = command[i];
 
 					// Get Closing Bracket
+					int begin = token.IndexOf("{") + 1;
 					int close = token.IndexOf("}");
 					// If token matches variables criterea
-					if (token.StartsWith("{") && close != -1) {
+					if (begin != 0 && close != -1) {
 						if (token.Substring(1, close - 1) != ignore) {
 							// Replace variable placeholder with variable's contents
-							command[i] = variables[token.Substring(1, close - 1)] + token.Substring(close + 1, token.Length - close - 1);
+							Console.WriteLine(token.Substring(close + 1, token.Length - close - 1));
+							command[i] = variables[token.Substring(begin, close - begin)] + token.Substring(close + 1, token.Length - close - 1);
 						}
 					}
 				}

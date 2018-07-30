@@ -194,6 +194,12 @@ namespace FlexScript {
 						variables["env.cd"] = Environment.CurrentDirectory;
 						break;
 
+					case "dumpvars":
+						foreach (string variable in variables.Keys) {
+							Console.WriteLine(variable + " == " + variables[variable]);
+						}
+						break;
+
 					#region directory
 					case "directory":
 						if (commandLength < 2)

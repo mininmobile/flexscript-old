@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace FlexScript {
 	class Interpreter {
 		Dictionary<string, string> variables = new Dictionary<string, string>();
+		Dictionary<string, List<string>> functions = new Dictionary<string, List<string>>();
 		Dictionary<string, int> labels = new Dictionary<string, int>();
 		int contexti = 0;
 
@@ -650,6 +651,16 @@ namespace FlexScript {
 										}
 										break;
 
+									case "function":
+										// Get raw promise data
+										string _function = string.Join(" ", command.Skip(5));
+
+										// Set "command" variable
+										variables[command[1]] = "[ internal:[ function:" + string.Join(" ", _function) + " ] ]";
+										// Set user command variable
+										functions[command[1]] = _function.Split('&').ToList();
+										break;
+
 									default:
 										throw new Exception("Invalid Token; unsupported object type token '" + command[4] + "', did you mean to use class?");
 								}
@@ -750,7 +761,23 @@ namespace FlexScript {
 					#endregion
 
 					default:
-						throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
+						if (functions.Keys.Contains(command[0])) {
+							foreach (string l in functions[command[0]]) {
+								// Create args variable
+								variables["args"] = String.Join(",", command.Skip(1));
+								// Create args length variable
+								variables["args.length"] = variables["args"].Split(',').Length.ToString();
+								// Create arg variables
+								for (int i = 0; i < int.Parse(variables["args.length"]); i++) {
+									variables["args[" + i + "]"] = variables["args"].Split(',')[i];
+								}
+
+								ParseLine(l, context);
+							}
+						} else {
+							throw new Exception("Invalid Token; invalid command '" + command[0] + "'");
+						}
+						break;
 				}
 			#endregion
 		}

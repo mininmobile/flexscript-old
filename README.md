@@ -1,5 +1,5 @@
 # FlexScript
-An old programming language project I want to revisit
+Hi, @mininmobile here for FlexScript! The super-strong, bug-proof script! ... But really though, just an old programming language project I want to revisit.
 
 ## Syntax
 ### Commands/Functions
@@ -21,17 +21,17 @@ There are 2 types of loops, `for` and `while`, `for` is like a swiss army knife 
 You can define a label on a newline with `:labelname` where `labelname` is the name of your label, then you can jump to it using the `goto` command, see `'While' Loop` under `Examples`.
 
 ### Types
-In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string, see `Math` and `Arrays` under `Examples`.
+In FlexScript, everything is stored as a string, unless it needs to be converted to another type, in that case it will be temporarily converted, and stored back as a string. See `Math` and `Arrays` under `Examples`.
 
 ## Examples
-### Hello World
+### Hi, Phil Swift (Hello world!)
 ```bash
-print Hello, World! # output is 'Hello, World!'
+print Hi, Phil Swift here for Flex Tape! # output is 'Hi, Phil Swift here for Flex Tape!'
 ```
 
 ### Pause
 ```bash
-print I hope you have a nice day
+print Flex Tape is no ordinary tape
 
 pause # Outputs 'Press any key to continue...' and waits for user keypresss
 
@@ -39,7 +39,7 @@ pause -s # Applying arguments -s or --silent outputs nothing and waits for user 
 
 pause -c Press any key... # Applying arguments -c or --custom outputs custom text (`Press any key...` in this case) and waits for user keypress
 
-print SIKE!
+print That's a lot of damage!
 ```
 
 ### Colors
